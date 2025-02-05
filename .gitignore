@@ -1,0 +1,45 @@
+# Node modules
+/node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript
+*.tsbuildinfo
+
+# MacOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# IDE files
+.idea/
+
+# Build output
+/dist
+/build
+
+# NPM package
+package-lock.json
+
+# Optional npm cache directory
+.npm/
+
+# Next.js build
+.next/
+
+# Jest
+coverage/
+
+# .env files with sensitive data
+.env.local
+.env.development.local
+.env.test.local
