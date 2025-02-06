@@ -1,9 +1,7 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { config } from './app.config.js';
-
-
-
+import path from 'path';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -20,12 +18,12 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: config.BASE_PATH || 'http://localhost:3000', // Usa BASE_PATH da config, ou localhost por padrão
+        url: config.BASE_PATH || 'http://localhost:3000', 
         description: 'API BJJ-COMPASS',
       },
     ],
   },
-  apis: ['./src/modules/**/*.js', './src/common/**/*.js'], 
+  apis: [path.resolve('controller/**/*.js')],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
