@@ -15,6 +15,10 @@ import rateLimit from 'express-rate-limit';
 import connectDatabase from './database/database.js';
 import { getEnv } from './common/utils/get-env.js';
 import { setupSwagger } from './config/swagger.config.js';
+import { HTTPSTATUS } from './config/http.config.js';
+import asyncHandler from './middlewares/asyncHandler.js';
+import userRoutes from './route/userRoutes.js';
+
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -55,6 +59,15 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+app.get(
+  "/",
+  asyncHandler(async (req, res, next) => {
+    res.status(HTTPSTATUS.OK).json({
+      message: "Hello Subscribers!!!",
+    });
+  })
+);
+app.use(`${BASE_PATH}/user`, userRoutes);
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {
   console.log(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
