@@ -5,7 +5,7 @@ import userService from "../service/userService.js";
 
 /**
  * @swagger
- * base_url/base_path/user/register:
+ * /base_path/base_url/user/register:
  *   post:
  *     summary: Register a new user
  *     description: Create a new user by providing a username, email, and password.
