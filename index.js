@@ -21,6 +21,7 @@ import userRoutes from './route/userRoutes.js';
 import trainingRoutes from './route/trainingRoutes.js';
 import userModel from './database/models/userModel.js';
 import trainingModel from './database/models/trainingModel.js';
+import goalRoutes from './route/goalRoutes.js';
 
 
 const app = express();
@@ -74,9 +75,17 @@ app.get(
 //Routes
 app.use(`${BASE_PATH}/user`, userRoutes);
 app.use(`${BASE_PATH}/training`, trainingRoutes);
+app.use(`${BASE_PATH}/goal`, goalRoutes);
+
+
+app.use((req, res, _next) => {
+  console.log(`[${req.method}] ${req.url}`, req.body);
+  res.status(HTTPSTATUS.NOT_FOUND).json({ message: 'Rota não encontrada' });
+});
 
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {
-  console.log(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
+  console.log(`Server listening on port http://${config.APP_ORIGIN}:${config.PORT}${config.BASE_PATH} in ${config.NODE_ENV}`);
+  console.log(config.BASE_PATH)
   await connectDatabase();
 });
