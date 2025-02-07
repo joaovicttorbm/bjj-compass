@@ -71,20 +71,12 @@ app.get(
   })
 );
 
-
+//Routes
 app.use(`${BASE_PATH}/user`, userRoutes);
 app.use(`${BASE_PATH}/training`, trainingRoutes);
+
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {
   console.log(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
   await connectDatabase();
-  const users = await userModel.find();
-  // const training = await trainingModel.find();
-
-  console.log('List of users:', users);
-  // console.log('List of training:', training);
-  // const userId = '67a4f3824344b2d8ec96492a'
-  // const existingUser = await userModel.findOne({  _id: new mongoose.Types.ObjectId(userId) });
-  // console.log('List of existingUser:', existingUser);
-
 });
