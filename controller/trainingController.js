@@ -4,7 +4,7 @@ import { default as asyncHandler } from "../middlewares/asyncHandler.js";
 import trainingService from "../service/trainingService.js";
 /**
  * @swagger
- * /base_path/base_url/user/training:
+ * /base_path/base_url/training:
  *   post:
  *     summary: Register a new training session
  *     description: Create a new training session by providing user ID, techniques, duration, intensity level, and optional notes.
