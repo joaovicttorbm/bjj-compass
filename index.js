@@ -18,6 +18,9 @@ import { setupSwagger } from './config/swagger.config.js';
 import { HTTPSTATUS } from './config/http.config.js';
 import asyncHandler from './middlewares/asyncHandler.js';
 import userRoutes from './route/userRoutes.js';
+import trainingRoutes from './route/trainingRoutes.js';
+import userModel from './database/models/userModel.js';
+import trainingModel from './database/models/trainingModel.js';
 
 
 const app = express();
@@ -67,9 +70,21 @@ app.get(
     });
   })
 );
+
+
 app.use(`${BASE_PATH}/user`, userRoutes);
+app.use(`${BASE_PATH}/training`, trainingRoutes);
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {
   console.log(`Server listening on port ${config.PORT} in ${config.NODE_ENV}`);
   await connectDatabase();
+  const users = await userModel.find();
+  // const training = await trainingModel.find();
+
+  console.log('List of users:', users);
+  // console.log('List of training:', training);
+  // const userId = '67a4f3824344b2d8ec96492a'
+  // const existingUser = await userModel.findOne({  _id: new mongoose.Types.ObjectId(userId) });
+  // console.log('List of existingUser:', existingUser);
+
 });
