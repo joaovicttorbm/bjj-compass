@@ -5,32 +5,29 @@ import { BadRequestException } from "../common/utils/catch-error.js";
 import ErrorCode from '../common/enums/error-code.enum.js';
 import { hashValue } from '../common/utils/bcrypt.js';
 
-const registerUserService = async (registerData) => {
+const registerUser = async (registerData) => {
 
-  const body = userSchemaValidation.parse(registerData);
+  const { username, email, password } = userSchemaValidation.parse(registerData);
 
-  const { username, email, password } = body;
+  await checkIfUserExists(email);
 
+  const hashedPassword = await hashValue(password) ;
 
+  return createUser({ username, email, password: hashedPassword }); 
+};
+
+const checkIfUserExists = async (email) => {
   const existingUser = await userModel.findOne({ email });
-
   if (existingUser) {
     throw new BadRequestException(
       "User already exists with this email",
       ErrorCode.AUTH_EMAIL_ALREADY_EXISTS
     );
   }
-
-  const hashedPassword = await hashValue(password) ;
-
-
-  const newUser = await userModel.create({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  return newUser; 
 };
 
-export default { registerUserService };
+const createUser = async (userData) => {
+  return await userModel.create(userData);
+};
+
+export default { registerUser };

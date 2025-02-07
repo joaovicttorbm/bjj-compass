@@ -59,9 +59,7 @@ const register = asyncHandler(async (req, res) => {
     ...req.body,
   });
 
-  const newUser = await userService.registerUserService(body);
-  
-  console.log('User created:', newUser);
+  const newUser = await userService.registerUser(body);
 
   return res.status(HTTPSTATUS.CREATED).json({
     message: "User registered successfully",
