@@ -6,14 +6,13 @@ import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 
 const createGoalService = async (goalData) => {
-
-  const { 
+  const {   
     description, 
     status, 
     progress, 
     notifications, 
-    user_id 
-} = goalSchemaValidation.parse(goalData);
+    user_id } = goalData;
+
 
   const existingUser = await findExistingUserById(user_id);
 
@@ -27,7 +26,7 @@ const createGoalService = async (goalData) => {
 };
 
 const createGoal = async (goalData) => {
-
+  const { description, status, progress, notifications, user_id } = goalData;
   if (goalData.status === 'completed' && goalData.progress < 100) {
     throw new BadRequestException(
       'Status cannot be "completed" unless progress is 100%',

@@ -11,7 +11,6 @@ const goalMiddleware = (req, res, next) => {
       errors: validationResult.error.errors,
     });
   }
-
   req.validatedBody = validationResult.data;
   next();
 };

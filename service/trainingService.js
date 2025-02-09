@@ -16,7 +16,7 @@ const createTrainingService = async (trainingData) => {
       intensityLevel, 
       notes, 
       user_id 
-    } = trainingSchemaValidation.parse(trainingData);
+    } = trainingData;
   
     const existingUser = await findExistingUserById(user_id);
   

@@ -74,7 +74,7 @@ import goalService from "../service/goalService.js";
  *                       example: 0
  */
 const registerGoal = asyncHandler ( async (req, res) => {
-    const newGoal = await goalService.createGoalService(validatedBody);
+    const newGoal = await goalService.createGoalService(req.body);
 
     return res.status(HTTPSTATUS.CREATED).json({
         message: "Goal registered successfully",

@@ -80,7 +80,7 @@ import trainingService from "../service/trainingService.js";
  *                       example: 0
  */
 const registerTraining = asyncHandler ( async (req, res) => {
-    const newTraining = await trainingService.createTrainingService(validatedBody);
+    const newTraining = await trainingService.createTrainingService(req.body);
 
     return res.status(HTTPSTATUS.CREATED).json({
         message: "Training registered successfully",

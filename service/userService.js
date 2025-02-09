@@ -7,7 +7,7 @@ import { hashValue } from '../common/utils/bcrypt.js';
 
 const registerUser = async (registerData) => {
 
-  const { username, email, password } = userSchemaValidation.parse(registerData);
+  const { username, email, password } = registerData;
 
   await checkIfUserExists(email);
 
