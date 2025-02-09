@@ -1,7 +1,7 @@
-import { trainingSchemaValidation } from "../common/validator/trainingValidation.js";
 import { HTTPSTATUS } from "../config/http.config.js";
 import { default as asyncHandler } from "../middlewares/asyncHandler.js";
 import trainingService from "../service/trainingService.js";
+
 /**
  * @swagger
  * /base_path/base_url/training:
@@ -79,11 +79,7 @@ import trainingService from "../service/trainingService.js";
  *                       type: integer
  *                       example: 0
  */
-
 const registerTraining = asyncHandler ( async (req, res) => {
-
-    const validatedBody = trainingSchemaValidation.parse({...req.body,});
-
     const newTraining = await trainingService.createTrainingService(validatedBody);
 
     return res.status(HTTPSTATUS.CREATED).json({

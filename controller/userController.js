@@ -1,4 +1,3 @@
-import { userSchemaValidation } from "../common/validator/userValidator.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import { HTTPSTATUS } from "../config/http.config.js";
 import userService from "../service/userService.js";
@@ -52,13 +51,7 @@ import userService from "../service/userService.js";
  *                       type: string
  *                       example: $2b$10$0NINhR9ak3wPiOG2zDNN2O96FZXq7htyzReugYTBOypfQ11io6mWS
  */
-
 const register = asyncHandler(async (req, res) => {
-
-  const body = userSchemaValidation.parse({
-    ...req.body,
-  });
-
   const newUser = await userService.registerUser(body);
 
   return res.status(HTTPSTATUS.CREATED).json({
