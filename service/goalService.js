@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import ErrorCode from "../common/enums/error-code.enum.js";
 import { BadRequestException } from "../common/utils/catch-error.js";
-import { findExistingUserById } from "../common/utils/findUserById.js";
+import { findExistingUserById } from "../common/utils/findUser.js";
 import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 

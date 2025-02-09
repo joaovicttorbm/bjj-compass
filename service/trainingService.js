@@ -4,7 +4,7 @@ import { BadRequestException } from "../common/utils/catch-error.js";
 import { trainingSchemaValidation } from "../common/validator/trainingValidation.js";
 import trainingModel from "../database/models/trainingModel.js";
 import userModel from "../database/models/userModel.js";
-import { findExistingUserById } from "../common/utils/findUserById.js";
+import { findExistingUserById } from "../common/utils/findUser.js";
 
 
 const createTrainingService = async (trainingData) => {
