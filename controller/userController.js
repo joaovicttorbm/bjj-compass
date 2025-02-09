@@ -52,7 +52,7 @@ import userService from "../service/userService.js";
  *                       example: $2b$10$0NINhR9ak3wPiOG2zDNN2O96FZXq7htyzReugYTBOypfQ11io6mWS
  */
 const register = asyncHandler(async (req, res) => {
-  const newUser = await userService.registerUser(body);
+  const newUser = await userService.registerUser(req.body);
 
   return res.status(HTTPSTATUS.CREATED).json({
     message: "User registered successfully",

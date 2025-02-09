@@ -5,3 +5,8 @@ export const userSchemaValidation = z.object({
     email: z.string().email('Invalid email format').min(3, "must be at least 3 characters long").max(255),
     password: z.string().min(8, 'Password must be at least 8 characters long').max(255)
   });
+
+  export const loginSchemaValidation = z.object({
+    email: z.string().email('Invalid email format').min(3, "must be at least 3 characters long").max(255),
+    password: z.string().min(8, 'Password must be at least 8 characters long').max(255)
+  });

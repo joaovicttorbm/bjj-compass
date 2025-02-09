@@ -22,6 +22,7 @@ import trainingRoutes from './route/trainingRoutes.js';
 import userModel from './database/models/userModel.js';
 import trainingModel from './database/models/trainingModel.js';
 import goalRoutes from './route/goalRoutes.js';
+import authRoutes from './route/authRoutes.js';
 
 
 const app = express();
@@ -76,6 +77,7 @@ app.get(
 app.use(`${BASE_PATH}/user`, userRoutes);
 app.use(`${BASE_PATH}/training`, trainingRoutes);
 app.use(`${BASE_PATH}/goal`, goalRoutes);
+app.use(`${BASE_PATH}/auth`, authRoutes);
 
 
 app.use((req, res, _next) => {
