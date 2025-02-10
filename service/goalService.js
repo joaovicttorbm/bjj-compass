@@ -35,8 +35,6 @@ const createGoal = async (goalData) => {
 };
 
 export const getGoalsByUserService = async (user_id) => {
-  console.log("service:", user_id)
-
   const goals = await goalModel.find({user_id: user_id});
 
   return goals;
