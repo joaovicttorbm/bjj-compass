@@ -8,7 +8,9 @@ import goalService from "../service/goalService.js";
  * /base_path/base_url/goals:
  *   post:
  *     summary: Register a new goal
- *     description: Create a new goal by providing description, status, progress, notifications, and associated user ID.
+ *     description: Create a new goal by providing goal details. The user ID is automatically extracted from the authentication token.
+ *     security:
+ *       - bearerAuth: []  # Definição para o uso de tokens JWT
  *     requestBody:
  *       required: true
  *       content:
@@ -33,10 +35,6 @@ import goalService from "../service/goalService.js";
  *                 type: boolean
  *                 description: Enable or disable notifications for this goal
  *                 example: true
- *               user_id:
- *                 type: string
- *                 description: ID of the user associated with the goal
- *                 example: "67a4f3824344b2d8ec96492a"
  *     responses:
  *       201:
  *         description: Goal registered successfully
@@ -73,8 +71,9 @@ import goalService from "../service/goalService.js";
  *                       type: integer
  *                       example: 0
  */
+
 const registerGoal = asyncHandler ( async (req, res) => {
-    const newGoal = await goalService.createGoalService(req.body);
+    const newGoal = await goalService.createGoalService(req.validatedBody);
 
     return res.status(HTTPSTATUS.CREATED).json({
         message: "Goal registered successfully",

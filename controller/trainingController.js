@@ -7,7 +7,9 @@ import trainingService from "../service/trainingService.js";
  * /base_path/base_url/training:
  *   post:
  *     summary: Register a new training session
- *     description: Create a new training session by providing user ID, techniques, duration, intensity level, and optional notes.
+ *     description: Create a new training session by providing training details. The user ID is automatically extracted from the authentication token.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -15,10 +17,6 @@ import trainingService from "../service/trainingService.js";
  *           schema:
  *             type: object
  *             properties:
- *               user_id:
- *                 type: string
- *                 description: ID of the user associated with the training session
- *                 example: 67a4f3824344b2d8ec96492g
  *               techniques:
  *                 type: array
  *                 items:
@@ -79,8 +77,9 @@ import trainingService from "../service/trainingService.js";
  *                       type: integer
  *                       example: 0
  */
+
 const registerTraining = asyncHandler ( async (req, res) => {
-    const newTraining = await trainingService.createTrainingService(req.body);
+    const newTraining = await trainingService.createTrainingService(req.validatedBody);
 
     return res.status(HTTPSTATUS.CREATED).json({
         message: "Training registered successfully",

@@ -23,6 +23,7 @@ import userModel from './database/models/userModel.js';
 import trainingModel from './database/models/trainingModel.js';
 import goalRoutes from './route/goalRoutes.js';
 import authRoutes from './route/authRoutes.js';
+import authenticateToken from './middlewares/authenticateToken.js';
 
 
 const app = express();
@@ -75,15 +76,16 @@ app.get(
 
 //Routes
 app.use(`${BASE_PATH}/user`, userRoutes);
-app.use(`${BASE_PATH}/training`, trainingRoutes);
-app.use(`${BASE_PATH}/goal`, goalRoutes);
 app.use(`${BASE_PATH}/auth`, authRoutes);
+app.use(`${BASE_PATH}/training`, authenticateToken , trainingRoutes);
+app.use(`${BASE_PATH}/goal`, authenticateToken , goalRoutes);
 
 
 app.use((req, res, _next) => {
   console.log(`[${req.method}] ${req.url}`, req.body);
   res.status(HTTPSTATUS.NOT_FOUND).json({ message: 'Rota não encontrada' });
 });
+
 
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {

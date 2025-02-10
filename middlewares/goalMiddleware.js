@@ -2,7 +2,9 @@ import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 import { HTTPSTATUS } from "../config/http.config.js";
 
 const goalMiddleware = (req, res, next) => {
-  const validationResult = goalSchemaValidation.safeParse(req.body);
+  const goalData = { ...req.body, user_id: req.user_id };
+  console.log(goalData); 
+  const validationResult = goalSchemaValidation.safeParse(goalData);
 
   if (!validationResult.success) {
 

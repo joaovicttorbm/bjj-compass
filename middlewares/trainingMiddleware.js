@@ -2,7 +2,9 @@ import { trainingSchemaValidation } from "../common/validator/trainingValidation
 import { HTTPSTATUS } from "../config/http.config.js";
 
 const trainingMiddleware = (req, res, next) => {
-  const validationResult = trainingSchemaValidation.safeParse(req.body);
+  const trainingData = { ...req.body, user_id: req.user_id };
+  console.log(trainingData); 
+  const validationResult = trainingSchemaValidation.safeParse(trainingData);
 
   if (!validationResult.success) {
 

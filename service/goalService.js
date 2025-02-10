@@ -12,8 +12,7 @@ const createGoalService = async (goalData) => {
     progress, 
     notifications, 
     user_id } = goalData;
-
-
+    
   const existingUser = await findExistingUserById(user_id);
 
   return await createGoal({ 
