@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import ErrorCode from "../common/enums/error-code.enum.js";
-import { BadRequestException } from "../common/utils/catch-error.js";
+import { BadRequestException, NotFoundException } from "../common/utils/catch-error.js";
 import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 
@@ -40,4 +40,24 @@ export const getGoalsByUserService = async (user_id) => {
   return goals;
 };
 
-export default { createGoalService, getGoalsByUserService };
+export const updateGoalService = async (goal_id, user_id, goalData) => {
+  const goal = await goalModel.findOne({ _id: new mongoose.Types.ObjectId(goal_id), user_id: new mongoose.Types.ObjectId(user_id) });
+
+  if (!goal) {
+    throw new NotFoundException('Goal not found for this user.');
+  }
+
+
+  Object.keys(goalData).forEach((key) => {
+    if (goalData[key] !== undefined) {
+      goal[key] = goalData[key];
+    }
+  });
+
+  await goal.save();
+
+  return goal;
+};
+
+
+export default { createGoalService, getGoalsByUserService , updateGoalService};
