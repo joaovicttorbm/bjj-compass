@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import ErrorCode from "../common/enums/error-code.enum.js";
 import { BadRequestException } from "../common/utils/catch-error.js";
-import { findExistingUserById } from "../common/utils/findUser.js";
 import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 
@@ -12,8 +11,6 @@ const createGoalService = async (goalData) => {
     progress, 
     notifications, 
     user_id } = goalData;
-    
-  const existingUser = await findExistingUserById(user_id);
 
   return await createGoal({ 
     description, 
@@ -37,4 +34,12 @@ const createGoal = async (goalData) => {
   return goal;
 };
 
-export default { createGoalService };
+export const getGoalsByUserService = async (user_id) => {
+  console.log("service:", user_id)
+
+  const goals = await goalModel.find({user_id: user_id});
+
+  return goals;
+};
+
+export default { createGoalService, getGoalsByUserService };

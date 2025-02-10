@@ -81,4 +81,16 @@ const registerGoal = asyncHandler ( async (req, res) => {
     });
 });
 
-export default { registerGoal };
+export const getGoalsByUser = async (req, res) => {
+      const user_id = req.user_id; 
+      console.log("controller:", user_id)
+
+      const goals = await goalService.getGoalsByUserService(user_id);
+  
+      return res.status(HTTPSTATUS.OK).json({ 
+        message: 'Goals retrieved successfully.', 
+        data: goals 
+    });
+    };
+
+export default { registerGoal, getGoalsByUser };
