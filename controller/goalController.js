@@ -73,7 +73,7 @@ import goalService from "../service/goalService.js";
  */
 
 const registerGoal = asyncHandler ( async (req, res) => {
-    const newGoal = await goalService.createGoalService(req.validatedBody);
+    const newGoal = await goalService.createGoal(req.validatedBody);
 
     return res.status(HTTPSTATUS.CREATED).json({
         message: "Goal registered successfully",
@@ -131,7 +131,7 @@ const registerGoal = asyncHandler ( async (req, res) => {
 const getGoalsByUser = asyncHandler(async (req, res) => {
       const user_id = req.user_id; 
 
-      const goals = await goalService.getGoalsByUserService(user_id);
+      const goals = await goalService.getGoalsByUser(user_id);
   
       return res.status(HTTPSTATUS.OK).json({ 
         message: 'Goals retrieved successfully.', 
@@ -195,7 +195,7 @@ const getGoalsByUser = asyncHandler(async (req, res) => {
 const getGoalIdByUser = asyncHandler(async (req, res) => {
     const user_id = req.user_id; 
     const { goal_id } = req.params; 
-    const goals = await goalService.getGoalIdByUserService(goal_id, user_id);
+    const goals = await goalService.getGoalIdByUser(goal_id, user_id);
 
     return res.status(HTTPSTATUS.OK).json({ 
       message: 'Goals retrieved successfully.', 
@@ -307,7 +307,7 @@ const getGoalsByFilter = async (req, res) => {
     const user_id = req.user_id; 
     const filters = req.goalFilters;
     console.log("controller:",user_id , filters)
-    const goals = await goalService.getGoalsByFilterService(user_id, filters);
+    const goals = await goalService.getGoalsByFilter(user_id, filters);
     console.log("controller:",goals)
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goals Filter retrieved successfully.', 
@@ -390,7 +390,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     const goal_id = req.params.goal_id; 
     const goalData = req.validatedBody;  
          
-    const updatedGoal = await goalService.updateGoalService(goal_id, user_id, goalData);
+    const updatedGoal = await goalService.updateGoal(goal_id, user_id, goalData);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goal updated successfully.',

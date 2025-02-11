@@ -13,26 +13,25 @@ const validateGoalStatus = (goalData) => {
   }
 };
 
-const createGoalService = async (goalData) => {
+const createGoal = async (goalData) => {
   validateGoalStatus(goalData);
   return await goalModel.create(goalData);
 };
 
-const getGoalsByUserService = async (user_id) => {
+const getGoalsByUser = async (user_id) => {
   return await goalModel.find({ user_id }).select("description status progress").lean();;
 };
 
-const getGoalsByFilterService = async (user_id, filters) => {
+const getGoalsByFilter = async (user_id, filters) => {
   console.log("service:",user_id, filters)
   return await goalModel.find({user_id, ...filters}).select("description status progress notifications").lean();
 };
 
-const getGoalIdByUserService = async (goal_id, user_id) => {
+const getGoalIdByUser = async (goal_id, user_id) => {
   return await goalModel.findOne({ _id: goal_id, user_id }).lean();
 };
 
-
-const updateGoalService = async (goal_id, user_id, goalData) => {
+const updateGoal = async (goal_id, user_id, goalData) => {
   const goal = await goalModel.findOne({ _id: goal_id, user_id }).lean();
   if (!goal) {
     throw new NotFoundException('Goal not found for this user.');
@@ -49,10 +48,19 @@ const updateGoalService = async (goal_id, user_id, goalData) => {
   return goal;
 };
 
+const deleteGoal = async (goal_id, user_id) => {
+  const goal = await goalModel.findOneAndDelete({ _id: goal_id, user_id }).lean();
+  if (!goal) {
+    throw new NotFoundException('Goal not found for this user.');
+  }
+
+};
+
 export default {
-  createGoalService,
-  getGoalsByUserService,
-  updateGoalService,
-  getGoalIdByUserService,
-  getGoalsByFilterService,
+  createGoal,
+  getGoalsByUser,
+  updateGoal,
+  getGoalIdByUser,
+  getGoalsByFilter,
+  deleteGoal
 };
