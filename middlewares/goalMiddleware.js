@@ -25,6 +25,37 @@ export const goalGetIdMiddleware = (req, res, next) => {
   next()
 };
 
+export const parseGoalFiltersMiddleware = (req, res, next) => {
+  const { status, progressMin, progressMax, notifications, dateFrom, dateTo } = req.query;
+
+  const filters = {};
+
+  if (status) {
+    filters.status = status;
+  }
+
+  if (progressMin || progressMax) {
+    filters.progress = {};
+    if (progressMin) filters.progress.$gte = Number(progressMin);
+    if (progressMax) filters.progress.$lte = Number(progressMax);
+  }
+
+  if (notifications !== undefined) {
+    filters.notifications = notifications === 'true';
+  }
+
+  if (dateFrom || dateTo) {
+    filters.createdAt = {};
+    if (dateFrom) filters.createdAt.$gte = new Date(dateFrom);
+    if (dateTo) filters.createdAt.$lte = new Date(dateTo);
+  }
+
+  req.goalFilters = filters;
+  console.log("midle:",filters)
+  next();
+};
+
+
 export const goalUpdateMiddleware = (req, res, next) => {
   const { body, params, user_id } = req;
   const { goal_id } = params;
