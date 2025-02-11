@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { goalSchemaValidation, goalUpdateSchemaValidation } from "../common/validator/goalValidation.js";
 import { HTTPSTATUS } from "../config/http.config.js";
+import { validateObjectId } from "../common/utils/validateObjectId.js";
 
 export const goalRegisterMiddleware = (req, res, next) => {
   const goalData = { ...req.body, user_id: req.user_id };
@@ -15,20 +16,22 @@ export const goalRegisterMiddleware = (req, res, next) => {
     });
   }
   req.validatedBody = validationResult.data;
-  next();
+  next(); 
 };
 
+export const goalGetIdMiddleware = (req, res, next) => {
+  const { goal_id } = req.params; 
+  if (validateObjectId(goal_id, res, "goal_id") === true);
+  next()
+};
 
 export const goalUpdateMiddleware = (req, res, next) => {
-  const { description, status, progress, notifications } = req.body;
-  const { goal_id } = req.params; 
-  const goalData = { ...req.body, user_id: req.user_id };
+  const { body, params, user_id } = req;
+  const { goal_id } = params;
+  const { description, status, progress, notifications } = body;
+  const goalData = { ...body, user_id };
   
-  if (!mongoose.Types.ObjectId.isValid(goal_id)) {
-    return res.status(HTTPSTATUS.BAD_REQUEST).json({
-      error: 'Invalid goalId. It must be a valid ObjectId (24-character hexadecimal string).',
-    });
-  }
+  if (validateObjectId(goal_id, res, "goal_id") === true);
 
   if (!description && !status && progress === undefined && notifications === undefined) {
     return res.status(HTTPSTATUS.BAD_REQUEST).json({
@@ -43,10 +46,10 @@ export const goalUpdateMiddleware = (req, res, next) => {
       errors: validationResult.error.errors,
     });
   }
-
-  // Se for válido, passa os dados validados para o próximo middleware ou controlador
   req.validatedBody = validationResult.data;
   next();
 };
+
+
 
 

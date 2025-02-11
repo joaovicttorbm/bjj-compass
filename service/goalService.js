@@ -4,53 +4,37 @@ import { BadRequestException, NotFoundException } from "../common/utils/catch-er
 import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 
-const createGoalService = async (goalData) => {
-  const {   
-    description, 
-    status, 
-    progress, 
-    notifications, 
-    user_id } = goalData;
-
-  return await createGoal({ 
-    description, 
-    status, 
-    progress, 
-    notifications, 
-    user_id 
-});
-};
-
-const createGoal = async (goalData) => {
-  const { description, status, progress, notifications, user_id } = goalData;
+const validateGoalStatus = (goalData) => {
   if (goalData.status === 'completed' && goalData.progress < 100) {
     throw new BadRequestException(
       'Status cannot be "completed" unless progress is 100%',
       ErrorCode.INVALID_GOAL_STATUS
     );
   }
-
-  const goal = await goalModel.create(goalData);
-  return goal;
 };
 
-export const getGoalsByUserService = async (user_id) => {
-  const goals = await goalModel.find({user_id: user_id});
-
-  return goals;
+const createGoalService = async (goalData) => {
+  validateGoalStatus(goalData);
+  return await goalModel.create(goalData);
 };
 
-export const updateGoalService = async (goal_id, user_id, goalData) => {
-  const goal = await goalModel.findOne({ _id: new mongoose.Types.ObjectId(goal_id), user_id: new mongoose.Types.ObjectId(user_id) });
+const getGoalsByUserService = async (user_id) => {
+  return await goalModel.find({ user_id }).select("description status progress").lean();;
+};
 
+const getGoalIdByUserService = async (goal_id, user_id) => {
+  return await goalModel.findOne({ _id: goal_id, user_id }).lean();
+};
+
+const updateGoalService = async (goal_id, user_id, goalData) => {
+  const goal = await goalModel.findOne({ _id: goal_id, user_id }).lean();
   if (!goal) {
     throw new NotFoundException('Goal not found for this user.');
   }
 
-
-  Object.keys(goalData).forEach((key) => {
-    if (goalData[key] !== undefined) {
-      goal[key] = goalData[key];
+  Object.entries(goalData).forEach(([key, value]) => {
+    if (value !== undefined) {
+      goal[key] = value;
     }
   });
 
@@ -59,5 +43,9 @@ export const updateGoalService = async (goal_id, user_id, goalData) => {
   return goal;
 };
 
-
-export default { createGoalService, getGoalsByUserService , updateGoalService};
+export default {
+  createGoalService,
+  getGoalsByUserService,
+  updateGoalService,
+  getGoalIdByUserService,
+};

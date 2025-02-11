@@ -1,7 +1,7 @@
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
 import { HTTPSTATUS } from "../config/http.config.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import goalService, { updateGoalService } from "../service/goalService.js";
+import goalService from "../service/goalService.js";
 
 /**
  * @swagger
@@ -128,7 +128,7 @@ const registerGoal = asyncHandler ( async (req, res) => {
  *                         example: 0
  */
 
-export const getGoalsByUser = asyncHandler(async (req, res) => {
+const getGoalsByUser = asyncHandler(async (req, res) => {
       const user_id = req.user_id; 
 
       const goals = await goalService.getGoalsByUserService(user_id);
@@ -138,6 +138,18 @@ export const getGoalsByUser = asyncHandler(async (req, res) => {
         data: goals 
     });
 });
+
+const getGoalIdByUser = asyncHandler(async (req, res) => {
+    const user_id = req.user_id; 
+
+    const goals = await goalService.getGoalIdByUserService(user_id);
+
+    return res.status(HTTPSTATUS.OK).json({ 
+      message: 'Goals retrieved successfully.', 
+      data: goals 
+  });
+});
+
 
 /**
  * @swagger
@@ -213,7 +225,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     const goal_id = req.params.goal_id; 
     const goalData = req.validatedBody;  
          
-    const updatedGoal = await updateGoalService(goal_id, user_id, goalData);
+    const updatedGoal = await goalService.updateGoalService(goal_id, user_id, goalData);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goal updated successfully.',
@@ -221,4 +233,4 @@ const updateGoal = asyncHandler(async (req, res) => {
     });
 })
 
-export default { registerGoal , getGoalsByUser , updateGoal };
+export default { registerGoal , getGoalsByUser , updateGoal , getGoalIdByUser };
