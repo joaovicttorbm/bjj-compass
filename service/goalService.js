@@ -48,19 +48,10 @@ const updateGoal = async (goal_id, user_id, goalData) => {
   return goal;
 };
 
-const deleteGoal = async (goal_id, user_id) => {
-  const goal = await goalModel.findOneAndDelete({ _id: goal_id, user_id }).lean();
-  if (!goal) {
-    throw new NotFoundException('Goal not found for this user.');
-  }
-
-};
-
 export default {
   createGoal,
   getGoalsByUser,
   updateGoal,
   getGoalIdByUser,
   getGoalsByFilter,
-  deleteGoal
-};
+  };
