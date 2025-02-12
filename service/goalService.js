@@ -32,20 +32,29 @@ const getGoalIdByUser = async (goal_id, user_id) => {
 };
 
 const updateGoal = async (goal_id, user_id, goalData) => {
-  const goal = await goalModel.findOne({ _id: goal_id, user_id }).lean();
+  const goal = await goalModel.findOne({ _id: goal_id, user_id });
+
+  if (!goal) {
+  throw new NotFoundException('Goal not found for this user.');
+}
+
+  Object.entries(goalData).forEach(([key, value]) => {
+  if (value !== undefined) {
+    goal[key] = value;
+  }
+  });
+
+  await goal.save(); 
+
+  return goal;
+};
+
+const deleteGoal = async (goal_id, user_id) => {
+  console.log("service :" ,goal_id, user_id)
+  const goal = await goalModel.findOneAndDelete({ _id: goal_id, user_id }).lean();
   if (!goal) {
     throw new NotFoundException('Goal not found for this user.');
   }
-
-  Object.entries(goalData).forEach(([key, value]) => {
-    if (value !== undefined) {
-      goal[key] = value;
-    }
-  });
-
-  await goal.save();
-
-  return goal;
 };
 
 export default {
@@ -54,4 +63,5 @@ export default {
   updateGoal,
   getGoalIdByUser,
   getGoalsByFilter,
+  deleteGoal,
   };

@@ -128,7 +128,7 @@ const registerGoal = asyncHandler ( async (req, res) => {
  *                         example: 0
  */
 
-const getGoalsByUser = asyncHandler(async (req, res) => {
+const getGoals = asyncHandler(async (req, res) => {
       const user_id = req.user_id; 
 
       const goals = await goalService.getGoalsByUser(user_id);
@@ -192,7 +192,7 @@ const getGoalsByUser = asyncHandler(async (req, res) => {
  *                       example: 0
  */
 
-const getGoalIdByUser = asyncHandler(async (req, res) => {
+const getGoalId = asyncHandler(async (req, res) => {
     const user_id = req.user_id; 
     const { goal_id } = req.params; 
     const goals = await goalService.getGoalIdByUser(goal_id, user_id);
@@ -398,4 +398,52 @@ const updateGoal = asyncHandler(async (req, res) => {
     });
 })
 
-export default { registerGoal , getGoalsByUser , updateGoal , getGoalIdByUser , getGoalsByFilter };
+/**
+ * @swagger
+ * /base_path/base_url/goal/{goal_id}:
+ *   delete:
+ *     summary: Delete an existing goal
+ *     description: Deletes a specific goal for the authenticated user based on its unique ID. The user ID is automatically extracted from the authentication token.
+ *     security:
+ *       - bearerAuth: []  # JWT token authentication
+ *     parameters:
+ *       - name: goal_id
+ *         in: path
+ *         required: true
+ *         description: The ID of the goal to delete
+ *         schema:
+ *           type: string
+ *           example: "67aa22895d99240ada6de24c"
+ *     responses:
+ *       200:
+ *         description: Goal deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Goal deleted successfully."
+ */
+
+const deleteGoal = asyncHandler(async (req, res) => {
+    const user_id = req.user_id;  
+    const goal_id = req.params.goal_id;   
+    console.log("controller :" ,goal_id, user_id)
+         
+    const updatedGoal = await goalService.deleteGoal(goal_id, user_id);
+    
+    return res.status(HTTPSTATUS.OK).json({
+        message: 'Goal delete successfully.',
+    });
+})
+
+export default { 
+    registerGoal , 
+    getGoals , 
+    updateGoal , 
+    getGoalId , 
+    getGoalsByFilter ,
+    deleteGoal, 
+};

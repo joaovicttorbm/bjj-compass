@@ -81,6 +81,15 @@ export const goalUpdateMiddleware = (req, res, next) => {
   next();
 };
 
+export const goalDeleteMiddleware = (req, res, next) => {
+  const { goal_id } = req.params;
+  console.log(`Deleting goal with ID: ${goal_id}`);
+  if (validateObjectId(goal_id, res, "goal_id") === true);
+
+  next();
+};
+
+
 
 
 
