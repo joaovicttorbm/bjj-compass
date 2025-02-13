@@ -49,6 +49,9 @@ import goalService from "../service/goalService.js";
  *                 data:
  *                   type: object
  *                   properties:
+ *                     goalId:
+ *                       type: string
+ *                       example: "67a68f2eeb478ff9bf12ddf5"
  *                     description:
  *                       type: string
  *                       example: "Learn basic techniques"
@@ -61,16 +64,8 @@ import goalService from "../service/goalService.js";
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     userId:
- *                       type: string
- *                       example: "67a4f3824344b2d8ec96492a"
- *                     _id:
- *                       type: string
- *                       example: "67a68f2eeb478ff9bf12ddf5"
- *                     __v:
- *                       type: integer
- *                       example: 0
  */
+
 
 const registerGoal = asyncHandler ( async (req, res) => {
     const newGoal = await goalService.createGoal(req.validatedBody);
@@ -105,27 +100,21 @@ const registerGoal = asyncHandler ( async (req, res) => {
  *                   items:
  *                     type: object
  *                     properties:
- *                       _id:
- *                         type: string
- *                         example: "67aa22895d99240ada6de24c"
- *                       description:
- *                         type: string
- *                         example: "Learn basic techniques"
- *                       status:
- *                         type: string
- *                         example: "completed"
- *                       progress:
- *                         type: integer
- *                         example: 100
- *                       notifications:
- *                         type: boolean
- *                         example: true
- *                       userId:
- *                         type: string
- *                         example: "67a649c42ff750984cd49fe7"
- *                       __v:
- *                         type: integer
- *                         example: 0
+  *                     goalId:
+ *                       type: string
+ *                       example: "67a68f2eeb478ff9bf12ddf5"
+ *                     description:
+ *                       type: string
+ *                       example: "Learn basic techniques"
+ *                     status:
+ *                       type: string
+ *                       example: "completed"
+ *                     progress:
+ *                       type: integer
+ *                       example: 100
+ *                     notifications:
+ *                       type: boolean
+ *                       example: true
  */
 
 const getGoals = asyncHandler(async (req, res) => {
@@ -169,9 +158,9 @@ const getGoals = asyncHandler(async (req, res) => {
  *                 data:
  *                   type: object
  *                   properties:
- *                     _id:
+ *                     goalId:
  *                       type: string
- *                       example: "67aa22895d99240ada6de24c"
+ *                       example: "67a68f2eeb478ff9bf12ddf5"
  *                     description:
  *                       type: string
  *                       example: "Learn basic techniques"
@@ -184,12 +173,6 @@ const getGoals = asyncHandler(async (req, res) => {
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     userId:
- *                       type: string
- *                       example: "67a649c42ff750984cd49fe7"
- *                     __v:
- *                       type: integer
- *                       example: 0
  */
 
 const getGoalId = asyncHandler(async (req, res) => {
@@ -272,35 +255,21 @@ const getGoalId = asyncHandler(async (req, res) => {
  *                   items:
  *                     type: object
  *                     properties:
- *                       _id:
- *                         type: string
- *                         example: "67aa22895d99240ada6de24c"
- *                       description:
- *                         type: string
- *                         example: "Learn basic techniques"
- *                       status:
- *                         type: string
- *                         example: "completed"
- *                       progress:
- *                         type: integer
- *                         example: 100
- *                       notifications:
- *                         type: boolean
- *                         example: true
- *                       userId:
- *                         type: string
- *                         example: "67a649c42ff750984cd49fe7"
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         example: "2024-01-01T10:00:00Z"
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
- *                         example: "2024-01-02T12:30:00Z"
- *                       __v:
- *                         type: integer
- *                         example: 0
+ *                     goalId:
+ *                       type: string
+ *                       example: "67a68f2eeb478ff9bf12ddf5"
+ *                     description:
+ *                       type: string
+ *                       example: "Learn basic techniques"
+ *                     status:
+ *                       type: string
+ *                       example: "completed"
+ *                     progress:
+ *                       type: integer
+ *                       example: 100
+ *                     notifications:
+ *                       type: boolean
+ *                       example: true
  */
 
 const getGoalsByFilter = async (req, res) => {
@@ -360,9 +329,12 @@ const getGoalsByFilter = async (req, res) => {
  *                 data:
  *                   type: object
  *                   properties:
+ *                     goalId:
+ *                       type: string
+ *                       example: "67a68f2eeb478ff9bf12ddf5"
  *                     description:
  *                       type: string
- *                       example: "1ereee"
+ *                       example: "Learn basic techniques"
  *                     status:
  *                       type: string
  *                       example: "completed"
@@ -372,15 +344,6 @@ const getGoalsByFilter = async (req, res) => {
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     userId:
- *                       type: string
- *                       example: "67a649c42ff750984cd49fe7"
- *                     _id:
- *                       type: string
- *                       example: "67aa22895d99240ada6de24c"
- *                     __v:
- *                       type: integer
- *                       example: 0
  */
 
 const updateGoal = asyncHandler(async (req, res) => {
