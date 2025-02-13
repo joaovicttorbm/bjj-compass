@@ -8,8 +8,10 @@ class GoalDTO {
     }
   
     static from(data) {
-      return Array.isArray(data) ? data.map(goal => new GoalDTO(goal)) : new GoalDTO(data);
-    }
+        return Array.isArray(data) 
+          ? data.map(item => new GoalDTO(item)) 
+          : [new GoalDTO(data)]; 
+      }
   }
 
 export default GoalDTO; 
