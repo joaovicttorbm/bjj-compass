@@ -9,9 +9,9 @@ const goalRoutes = Router();
 goalRoutes.post('/', goalRegisterMiddleware , goalController.registerGoal); 
 goalRoutes.get('/' , goalController.getGoals); 
 goalRoutes.get('/filter' , parseGoalFiltersMiddleware , goalController.getGoalsByFilter); 
-goalRoutes.get('/:goal_id' , goalGetIdMiddleware , goalController.getGoalId);
-goalRoutes.put('/:goal_id', goalUpdateMiddleware , goalController.updateGoal); 
-goalRoutes.delete('/:goal_id', goalDeleteMiddleware , goalController.deleteGoal); 
+goalRoutes.get('/:goalId' , goalGetIdMiddleware , goalController.getGoalId);
+goalRoutes.put('/:goalId', goalUpdateMiddleware , goalController.updateGoal); 
+goalRoutes.delete('/:goalId', goalDeleteMiddleware , goalController.deleteGoal); 
 
  
 

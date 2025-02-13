@@ -14,7 +14,7 @@ const authenticateToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, config.JWT.SECRET);
-    req.user_id = decoded.user_id; // Armazena o user_id no request
+    req.userId = decoded.userId;  
     next();
   } catch (error) {
     return res.status(HTTPSTATUS.UNAUTHORIZED).json({

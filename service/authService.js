@@ -14,7 +14,7 @@ const authenticateUser = async (email, password) => {
         throw new Error('Senha inválida');
     }
 
-    const token = jwt.sign({ user_id: user._id }, config.JWT.SECRET, { expiresIn: config.JWT.EXPIRES_IN });
+    const token = jwt.sign({ userId: user._id }, config.JWT.SECRET, { expiresIn: config.JWT.EXPIRES_IN });
     return { token };
 };
 

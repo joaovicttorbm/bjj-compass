@@ -61,7 +61,7 @@ import goalService from "../service/goalService.js";
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     user_id:
+ *                     userId:
  *                       type: string
  *                       example: "67a4f3824344b2d8ec96492a"
  *                     _id:
@@ -120,7 +120,7 @@ const registerGoal = asyncHandler ( async (req, res) => {
  *                       notifications:
  *                         type: boolean
  *                         example: true
- *                       user_id:
+ *                       userId:
  *                         type: string
  *                         example: "67a649c42ff750984cd49fe7"
  *                       __v:
@@ -129,9 +129,9 @@ const registerGoal = asyncHandler ( async (req, res) => {
  */
 
 const getGoals = asyncHandler(async (req, res) => {
-      const user_id = req.user_id; 
+      const userId = req.userId; 
 
-      const goals = await goalService.getGoalsByUser(user_id);
+      const goals = await goalService.getGoalsByUser(userId);
   
       return res.status(HTTPSTATUS.OK).json({ 
         message: 'Goals retrieved successfully.', 
@@ -141,7 +141,7 @@ const getGoals = asyncHandler(async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/goal/{goal_id}:
+ * /base_path/base_url/goal/{goalId}:
  *   get:
  *     summary: Get goal by ID
  *     description: Retrieve a single goal for the authenticated user by its unique ID. The user ID is automatically extracted from the authentication token.
@@ -184,7 +184,7 @@ const getGoals = asyncHandler(async (req, res) => {
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     user_id:
+ *                     userId:
  *                       type: string
  *                       example: "67a649c42ff750984cd49fe7"
  *                     __v:
@@ -193,9 +193,9 @@ const getGoals = asyncHandler(async (req, res) => {
  */
 
 const getGoalId = asyncHandler(async (req, res) => {
-    const user_id = req.user_id; 
-    const { goal_id } = req.params; 
-    const goals = await goalService.getGoalIdByUser(goal_id, user_id);
+    const userId = req.userId; 
+    const { goalId } = req.params; 
+    const goals = await goalService.getGoalIdByUser(goalId, userId);
 
     return res.status(HTTPSTATUS.OK).json({ 
       message: 'Goals retrieved successfully.', 
@@ -287,7 +287,7 @@ const getGoalId = asyncHandler(async (req, res) => {
  *                       notifications:
  *                         type: boolean
  *                         example: true
- *                       user_id:
+ *                       userId:
  *                         type: string
  *                         example: "67a649c42ff750984cd49fe7"
  *                       createdAt:
@@ -304,9 +304,9 @@ const getGoalId = asyncHandler(async (req, res) => {
  */
 
 const getGoalsByFilter = async (req, res) => {
-    const user_id = req.user_id; 
+    const userId = req.userId; 
     const filters = req.goalFilters;
-    const goals = await goalService.getGoalsByFilter(user_id, filters);
+    const goals = await goalService.getGoalsByFilter(userId, filters);
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goals Filter retrieved successfully.', 
         data: goals 
@@ -316,7 +316,7 @@ const getGoalsByFilter = async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/goal/{goal_id}:
+ * /base_path/base_url/goal/{goalId}:
  *   put:
  *     summary: Update an existing goal
  *     description: Update the details of an existing goal. The user ID is automatically extracted from the authentication token.
@@ -372,7 +372,7 @@ const getGoalsByFilter = async (req, res) => {
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     user_id:
+ *                     userId:
  *                       type: string
  *                       example: "67a649c42ff750984cd49fe7"
  *                     _id:
@@ -384,11 +384,11 @@ const getGoalsByFilter = async (req, res) => {
  */
 
 const updateGoal = asyncHandler(async (req, res) => {
-    const user_id = req.user_id;  
-    const goal_id = req.params.goal_id; 
+    const userId = req.userId;  
+    const goalId = req.params.goalId; 
     const goalData = req.validatedBody;  
          
-    const updatedGoal = await goalService.updateGoal(goal_id, user_id, goalData);
+    const updatedGoal = await goalService.updateGoal(goalId, userId, goalData);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goal updated successfully.',
@@ -398,14 +398,14 @@ const updateGoal = asyncHandler(async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/goal/{goal_id}:
+ * /base_path/base_url/goal/{goalId}:
  *   delete:
  *     summary: Delete an existing goal
  *     description: Deletes a specific goal for the authenticated user based on its unique ID. The user ID is automatically extracted from the authentication token.
  *     security:
  *       - bearerAuth: []  # JWT token authentication
  *     parameters:
- *       - name: goal_id
+ *       - name: goalId
  *         in: path
  *         required: true
  *         description: The ID of the goal to delete
@@ -426,10 +426,10 @@ const updateGoal = asyncHandler(async (req, res) => {
  */
 
 const deleteGoal = asyncHandler(async (req, res) => {
-    const user_id = req.user_id;  
-    const goal_id = req.params.goal_id;   
+    const userId = req.userId;  
+    const goalId = req.params.goalId;   
          
-    const updatedGoal = await goalService.deleteGoal(goal_id, user_id);
+    const updatedGoal = await goalService.deleteGoal(goalId, userId);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goal delete successfully.',

@@ -70,7 +70,7 @@ import trainingService from "../service/trainingService.js";
  *                     notes:
  *                       type: string
  *                       example: "Focado em resistência muscular"
- *                     user_id:
+ *                     userId:
  *                       type: string
  *                       example: 67a4f3824344b2d8ec96492g
  *                     __v:
@@ -89,7 +89,7 @@ const registerTraining = asyncHandler ( async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/training/{training_id}:
+ * /base_path/base_url/training/{trainingId}:
  *   get:
  *     summary: Get training by ID
  *     description: Retrieve a single training for the authenticated user by its unique ID. The user ID is automatically extracted from the authentication token.
@@ -141,9 +141,9 @@ const registerTraining = asyncHandler ( async (req, res) => {
  */
 
 const getTrainingId = asyncHandler(async (req, res) => {
-    const user_id = req.user_id; 
-    const { training_id } = req.params; 
-    const trainings = await trainingService.getTrainingId(training_id, user_id);
+    const userId = req.userId; 
+    const { trainingId } = req.params; 
+    const trainings = await trainingService.getTrainingId(trainingId, userId);
 
     return res.status(HTTPSTATUS.OK).json({ 
       message: 'Trainig retrieved successfully.', 
@@ -200,9 +200,9 @@ const getTrainingId = asyncHandler(async (req, res) => {
 
 
 const getTrainings = asyncHandler(async (req, res) => {
-      const user_id = req.user_id; 
+      const userId = req.userId; 
 
-      const trainings = await trainingService.getTrainings(user_id);
+      const trainings = await trainingService.getTrainings(userId);
   
       return res.status(HTTPSTATUS.OK).json({ 
         message: 'Trainings retrieved successfully.', 
@@ -303,9 +303,9 @@ const getTrainings = asyncHandler(async (req, res) => {
 
 
 const getTrainingsByFilter = async (req, res) => {
-    const user_id = req.user_id; 
+    const userId = req.userId; 
     const filters = req.trainingFilters;
-    const trainings = await trainingService.getTrainigsByFilter(user_id, filters);
+    const trainings = await trainingService.getTrainigsByFilter(userId, filters);
     return res.status(HTTPSTATUS.OK).json({
         message: 'Trainings Filter retrieved successfully.', 
         data: trainings 
@@ -315,7 +315,7 @@ const getTrainingsByFilter = async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/goal/{goal_id}:
+ * /base_path/base_url/goal/{trainingId}:
  *   put:
  *     summary: Update an existing goal
  *     description: Update the details of an existing goal. The user ID is automatically extracted from the authentication token.
@@ -371,7 +371,7 @@ const getTrainingsByFilter = async (req, res) => {
  *                     notifications:
  *                       type: boolean
  *                       example: true
- *                     user_id:
+ *                     userId:
  *                       type: string
  *                       example: "67a649c42ff750984cd49fe7"
  *                     _id:
@@ -383,11 +383,11 @@ const getTrainingsByFilter = async (req, res) => {
  */
 
 const updateTraining = asyncHandler(async (req, res) => {
-    const user_id = req.user_id;  
-    const training_id = req.params.training_id; 
+    const userId = req.userId;  
+    const trainingId = req.params.trainingId; 
     const trainingData = req.validatedBody;  
          
-    const updatedTraining = await trainingService.updateTrainig(training_id, user_id, trainingData);
+    const updatedTraining = await trainingService.updateTrainig(trainingId, userId, trainingData);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Training updated successfully.',
@@ -397,14 +397,14 @@ const updateTraining = asyncHandler(async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/training/{training_id}:
+ * /base_path/base_url/training/{trainingId}:
  *   delete:
  *     summary: Delete an existing training session
  *     description: Deletes a specific training session for the authenticated user based on its unique ID. The user ID is automatically extracted from the authentication token.
  *     security:
  *       - bearerAuth: []  # JWT token authentication
  *     parameters:
- *       - name: training_id
+ *       - name: trainingId
  *         in: path
  *         required: true
  *         description: The ID of the training session to delete
@@ -426,10 +426,10 @@ const updateTraining = asyncHandler(async (req, res) => {
 
 
 const deleteTraining = asyncHandler(async (req, res) => {
-    const user_id = req.user_id;  
-    const training_id = req.params.training_id;   
+    const userId = req.userId;  
+    const trainingId = req.params.trainingId;   
          
-    const updatedTraining = await trainingService.deleteTrainig(training_id, user_id);
+    const updatedTraining = await trainingService.deleteTrainig(trainingId, userId);
     
     return res.status(HTTPSTATUS.OK).json({
         message: 'Training delete successfully.',

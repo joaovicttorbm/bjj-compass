@@ -29,7 +29,7 @@ export const goalSchemaValidation = z
     status: statusSchema,
     progress: progressSchema,
     notifications: notificationsSchema,
-    user_id: userIdSchema,
+    userId: userIdSchema,
   })
   .refine(data => !(data.status === 'completed' && data.progress < 100), {
     message: 'Status cannot be "completed" unless progress is 100%',

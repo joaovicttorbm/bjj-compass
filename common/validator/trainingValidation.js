@@ -38,7 +38,7 @@ export const trainingSchemaValidation = z.object({
   durationMinutes: durationMinutesSchema,
   intensityLevel: intensityLevelSchema,
   notes: notesSchema,
-  user_id: userIdSchema,
+  userId: userIdSchema,
 });
 
 export const trainingUpdateSchemaValidation = z

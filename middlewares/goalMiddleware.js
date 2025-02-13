@@ -4,7 +4,7 @@ import { HTTPSTATUS } from "../config/http.config.js";
 import { validateObjectId } from "../common/utils/validateObjectId.js";
 
 export const goalRegisterMiddleware = (req, res, next) => {
-  const goalData = { ...req.body, user_id: req.user_id };
+  const goalData = { ...req.body, userId: req.userId };
 
   const validationResult = goalSchemaValidation.safeParse(goalData);
 
@@ -20,8 +20,8 @@ export const goalRegisterMiddleware = (req, res, next) => {
 };
 
 export const goalGetIdMiddleware = (req, res, next) => {
-  const { goal_id } = req.params; 
-  if (validateObjectId(goal_id, res, "goal_id") === true);
+  const { goalId } = req.params; 
+  if (validateObjectId(goalId, res, "goalId") === true);
   next()
 };
 
@@ -56,12 +56,12 @@ export const parseGoalFiltersMiddleware = (req, res, next) => {
 
 
 export const goalUpdateMiddleware = (req, res, next) => {
-  const { body, params, user_id } = req;
-  const { goal_id } = params;
+  const { body, params, userId } = req;
+  const { goalId } = params;
   const { description, status, progress, notifications } = body;
-  const goalData = { ...body, user_id };
+  const goalData = { ...body, userId };
   
-  if (validateObjectId(goal_id, res, "goal_id") === true);
+  if (validateObjectId(goalId, res, "goalId") === true);
 
   if (!description && !status && progress === undefined && notifications === undefined) {
     return res.status(HTTPSTATUS.BAD_REQUEST).json({
@@ -81,8 +81,8 @@ export const goalUpdateMiddleware = (req, res, next) => {
 };
 
 export const goalDeleteMiddleware = (req, res, next) => {
-  const { goal_id } = req.params;
-  if (validateObjectId(goal_id, res, "goal_id") === true);
+  const { goalId } = req.params;
+  if (validateObjectId(goalId, res, "goalId") === true);
 
   next();
 };

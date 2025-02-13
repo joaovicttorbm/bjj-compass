@@ -6,7 +6,7 @@ const trainingSchema = new Schema({
     durationMinutes: { type: Number, required: true },
     intensityLevel: { type: String, enum: ['low', 'medium', 'high'], required: true },
     notes: String,
-    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
   });
   
   const trainingModel = model('Training', trainingSchema);

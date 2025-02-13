@@ -5,7 +5,7 @@ const goalSchema = new Schema({
     status: { type: String, enum: ['in_progress', 'completed', 'abandoned'], default: 'in_progress' },
     progress: { type: Number, default: 0 },
     notifications: { type: Boolean, default: true },
-    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
   });
   
 export default model('Goal', goalSchema);

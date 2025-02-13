@@ -13,25 +13,25 @@ const createTraining = async (trainingData) => {
       durationMinutes, 
       intensityLevel, 
       notes, 
-      user_id 
+      userId 
     } = trainingData;
   
     return  await trainingModel.create(trainingData);
   }; 
   
-const getTrainings = async (user_id) => {
-  return await trainingModel.find({ user_id }).select("date techniques durationMinutes intensityLevel notes").lean();;
+const getTrainings = async (userId) => {
+  return await trainingModel.find({ userId }).select("date techniques durationMinutes intensityLevel notes").lean();;
 };
 
-const getTrainingId = async (training_id, user_id) => {
-  return await trainingModel.findOne({ _id: training_id, user_id }).lean();
+const getTrainingId = async (trainingId, userId) => {
+  return await trainingModel.findOne({ _id: trainingId, userId }).lean();
 };
 
-const getTrainigsByFilter = async (user_id, filters) => {
-  return await trainingModel.find({user_id, ...filters}).lean();
+const getTrainigsByFilter = async (userId, filters) => {
+  return await trainingModel.find({userId, ...filters}).lean();
 };
-const updateTrainig = async (training_id, user_id, trainingData) => {
-  const training = await trainingModel.findOne({ _id: training_id, user_id });
+const updateTrainig = async (trainingId, userId, trainingData) => {
+  const training = await trainingModel.findOne({ _id: trainingId, userId });
 
   if (!training) {
   throw new NotFoundException('Trainig not found for this user.');
@@ -48,8 +48,8 @@ const updateTrainig = async (training_id, user_id, trainingData) => {
   return training;
 };
 
-const deleteTrainig = async (training_id, user_id) => {
-  const training = await trainingModel.findOneAndDelete({ _id: training_id, user_id }).lean();
+const deleteTrainig = async (trainingId, userId) => {
+  const training = await trainingModel.findOneAndDelete({ _id: trainingId, userId }).lean();
   if (!training) {
     throw new NotFoundException('Trainig not found for this user.');
   }

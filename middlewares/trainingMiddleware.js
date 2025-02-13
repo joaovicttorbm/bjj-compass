@@ -31,8 +31,8 @@ export const trainingRegisterMiddleware = (req, res, next) => {
   next();
 };
 export const trainingGetIdMiddleware = (req, res, next) => {
-  const { training_id } = req.params; 
-  if (validateObjectId(training_id, res, "training_id") === true);
+  const { trainingId } = req.params; 
+  if (validateObjectId(trainingId, res, "trainingId") === true);
   next()
 };
 
@@ -81,9 +81,9 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
 
 export const trainingUpdateMiddleware = (req, res, next) => {
   const { params, userId } = req;
-  const { training_id } = params;
+  const { trainingId } = params;
 
-  if (!validateObjectId(training_id, res, "training_id")) {
+  if (!validateObjectId(trainingId, res, "trainingId")) {
     return res.status(HTTPSTATUS.BAD_REQUEST).json({
       message: "Invalid training ID format.",
     });
@@ -123,8 +123,8 @@ export const trainingUpdateMiddleware = (req, res, next) => {
 };
 
 export const trainingDeleteMiddleware = (req, res, next) => {
-  const { training_id } = req.params;
-  if (validateObjectId(training_id, res, "training_id") === true);
+  const { trainingId } = req.params;
+  if (validateObjectId(trainingId, res, "trainingId") === true);
 
   next();
 };
