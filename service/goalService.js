@@ -57,7 +57,7 @@ const updateGoal = async (goalId, userId, goalData) => {
 
   await goal.save(); 
   const goalDTO = GoalDTO.from(goal); 
-  return goalDTO ? goalDTO : []; 
+  return goalDTO 
 };
 
 const deleteGoal = async (goalId, userId) => {
