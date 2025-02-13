@@ -45,15 +45,18 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
     filters.date = {};
   
     if (dateFrom) {
-      filters.date.$gte = new Date(dateFrom);
+      const startOfDay = new Date(dateFrom);
+      startOfDay.setUTCHours(0, 0, 0, 0); // Garante que começa no início do dia em UTC
+      filters.date.$gte = startOfDay;
     }
   
     if (dateTo) {
       const endOfDay = new Date(dateTo);
-      endOfDay.setHours(23, 59, 59, 999);
+      endOfDay.setUTCHours(23, 59, 59, 999); // Ajusta para o último milissegundo do dia em UTC
       filters.date.$lte = endOfDay;
     }
   }
+  
   
 
  
@@ -71,7 +74,7 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
     filters.intensityLevel = intensityLevel;
   }
 
-
+  console.log(filters)
   req.trainingFilters = filters;  
   next();
 };
