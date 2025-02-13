@@ -23,7 +23,6 @@ const getGoalsByUser = async (user_id) => {
 };
 
 const getGoalsByFilter = async (user_id, filters) => {
-  console.log("service:",user_id, filters)
   return await goalModel.find({user_id, ...filters}).select("description status progress notifications").lean();
 };
 
@@ -50,7 +49,6 @@ const updateGoal = async (goal_id, user_id, goalData) => {
 };
 
 const deleteGoal = async (goal_id, user_id) => {
-  console.log("service :" ,goal_id, user_id)
   const goal = await goalModel.findOneAndDelete({ _id: goal_id, user_id }).lean();
   if (!goal) {
     throw new NotFoundException('Goal not found for this user.');

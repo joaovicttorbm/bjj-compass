@@ -51,7 +51,6 @@ export const parseGoalFiltersMiddleware = (req, res, next) => {
   }
 
   req.goalFilters = filters;
-  console.log("midle:",filters)
   next();
 };
 
@@ -72,7 +71,7 @@ export const goalUpdateMiddleware = (req, res, next) => {
   const validationResult = goalUpdateSchemaValidation.safeParse(goalData);
 
   if (!validationResult.success) {
-    return res.status(400).json({
+    return res.status(HTTPSTATUS.BAD_REQUEST).json({
       message: 'Invalid goal data',
       errors: validationResult.error.errors,
     });
@@ -83,7 +82,6 @@ export const goalUpdateMiddleware = (req, res, next) => {
 
 export const goalDeleteMiddleware = (req, res, next) => {
   const { goal_id } = req.params;
-  console.log(`Deleting goal with ID: ${goal_id}`);
   if (validateObjectId(goal_id, res, "goal_id") === true);
 
   next();

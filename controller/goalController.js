@@ -306,9 +306,7 @@ const getGoalId = asyncHandler(async (req, res) => {
 const getGoalsByFilter = async (req, res) => {
     const user_id = req.user_id; 
     const filters = req.goalFilters;
-    console.log("controller:",user_id , filters)
     const goals = await goalService.getGoalsByFilter(user_id, filters);
-    console.log("controller:",goals)
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goals Filter retrieved successfully.', 
         data: goals 
@@ -430,7 +428,6 @@ const updateGoal = asyncHandler(async (req, res) => {
 const deleteGoal = asyncHandler(async (req, res) => {
     const user_id = req.user_id;  
     const goal_id = req.params.goal_id;   
-    console.log("controller :" ,goal_id, user_id)
          
     const updatedGoal = await goalService.deleteGoal(goal_id, user_id);
     
