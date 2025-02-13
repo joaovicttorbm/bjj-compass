@@ -4,7 +4,7 @@ import authService from "../service/authService.js";
 
 /**
  * @swagger
- * /base_path/base_url/auth/login:
+ * /base_path/base_url/user/auth/login:
  *   post:
  *     summary: User Login
  *     description: Authenticate user by providing email and password.

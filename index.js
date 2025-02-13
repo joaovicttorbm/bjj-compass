@@ -76,7 +76,7 @@ app.get(
 
 //Routes
 app.use(`${BASE_PATH}/user`, userRoutes);
-app.use(`${BASE_PATH}/auth`, authRoutes);
+app.use(`${BASE_PATH}/user/auth`, authRoutes);
 app.use(`${BASE_PATH}/training`, authenticateToken , trainingRoutes);
 app.use(`${BASE_PATH}/goal`, authenticateToken , goalRoutes);
 
