@@ -3,7 +3,7 @@ import { trainingSchemaValidation, trainingUpdateSchemaValidation } from "../com
 import { HTTPSTATUS } from "../config/http.config.js";
 
 export const trainingRegisterMiddleware = (req, res, next) => {
-  const trainingData = { ...req.body, user_id: req.user_id };
+  const trainingData = { ...req.body, userId: req.userId };
 
   if (trainingData.date) {
     const parsedDate = new Date(trainingData.date);
@@ -43,9 +43,18 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
 
   if (dateFrom || dateTo) {
     filters.date = {};
-    if (dateFrom) filters.date.$gte = new Date(dateFrom);
-    if (dateTo) filters.date.$lte = new Date(dateTo);
+  
+    if (dateFrom) {
+      filters.date.$gte = new Date(dateFrom);
+    }
+  
+    if (dateTo) {
+      const endOfDay = new Date(dateTo);
+      endOfDay.setHours(23, 59, 59, 999);
+      filters.date.$lte = endOfDay;
+    }
   }
+  
 
  
   if (techniques) {
@@ -68,7 +77,7 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
 };
 
 export const trainingUpdateMiddleware = (req, res, next) => {
-  const { params, user_id } = req;
+  const { params, userId } = req;
   const { training_id } = params;
 
   if (!validateObjectId(training_id, res, "training_id")) {
@@ -77,7 +86,7 @@ export const trainingUpdateMiddleware = (req, res, next) => {
     });
   }
 
-  const trainingData = { ...req.body, user_id };
+  const trainingData = { ...req.body, userId };
 
   if (trainingData.date) {
     const parsedDate = new Date(trainingData.date);
