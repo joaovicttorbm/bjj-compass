@@ -48,12 +48,12 @@ const updateTrainig = async (training_id, user_id, trainingData) => {
   return training;
 };
 
-// const deleteTrainig = async (goal_id, user_id) => {
-//   const goal = await goalModel.findOneAndDelete({ _id: goal_id, user_id }).lean();
-//   if (!goal) {
-//     throw new NotFoundException('Trainig not found for this user.');
-//   }
-// };
+const deleteTrainig = async (training_id, user_id) => {
+  const training = await trainingModel.findOneAndDelete({ _id: training_id, user_id }).lean();
+  if (!training) {
+    throw new NotFoundException('Trainig not found for this user.');
+  }
+};
 
 export default { 
   createTraining, 
@@ -61,4 +61,5 @@ export default {
   getTrainingId,
   getTrainigsByFilter,
   updateTrainig,
+  deleteTrainig,
  };

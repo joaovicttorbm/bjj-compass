@@ -215,41 +215,13 @@ const getTrainings = asyncHandler(async (req, res) => {
  * @swagger
  * /base_path/base_url/training/filter:
  *   get:
- *     summary: Get goals for the authenticated user
- *     description: Retrieve a list of goals for the authenticated user. You can apply optional filters for status, progress range, notifications, and creation date.
+ *     summary: Get training sessions for the authenticated user
+ *     description: Retrieve a list of training sessions for the authenticated user. You can apply optional filters for date range, intensity level, duration, and techniques.
  *     parameters:
- *       - in: query
- *         name: status
- *         required: false
- *         description: Filter by goal status (in_progress, completed, abandoned).
- *         schema:
- *           type: string
- *           example: "completed"
- *       - in: query
- *         name: progressMin
- *         required: false
- *         description: Minimum progress percentage for filtering goals.
- *         schema:
- *           type: integer
- *           example: 50
- *       - in: query
- *         name: progressMax
- *         required: false
- *         description: Maximum progress percentage for filtering goals.
- *         schema:
- *           type: integer
- *           example: 100
- *       - in: query
- *         name: notifications
- *         required: false
- *         description: Filter by notifications enabled (true or false).
- *         schema:
- *           type: boolean
- *           example: true
  *       - in: query
  *         name: dateFrom
  *         required: false
- *         description: Start date for filtering by creation date.
+ *         description: Start date for filtering training sessions.
  *         schema:
  *           type: string
  *           format: date
@@ -257,16 +229,44 @@ const getTrainings = asyncHandler(async (req, res) => {
  *       - in: query
  *         name: dateTo
  *         required: false
- *         description: End date for filtering by creation date.
+ *         description: End date for filtering training sessions.
  *         schema:
  *           type: string
  *           format: date
- *           example: "2024-12-31"
+ *           example: "2024-01-02"
+ *       - in: query
+ *         name: intensityLevel
+ *         required: false
+ *         description: Filter by intensity level (low, medium, high).
+ *         schema:
+ *           type: string
+ *           example: "high"
+ *       - in: query
+ *         name: durationMin
+ *         required: false
+ *         description: Minimum duration in minutes.
+ *         schema:
+ *           type: integer
+ *           example: 30
+ *       - in: query
+ *         name: durationMax
+ *         required: false
+ *         description: Maximum duration in minutes.
+ *         schema:
+ *           type: integer
+ *           example: 120
+ *       - in: query
+ *         name: techniques
+ *         required: false
+ *         description: Filter by training techniques.
+ *         schema:
+ *           type: string
+ *           example: "guard passing"
  *     security:
- *       - bearerAuth: []  # Definição para o uso de tokens JWT
+ *       - bearerAuth: []  # JWT Authentication
  *     responses:
  *       200:
- *         description: Successfully retrieved the list of goals
+ *         description: Successfully retrieved the list of training sessions.
  *         content:
  *           application/json:
  *             schema:
@@ -274,7 +274,7 @@ const getTrainings = asyncHandler(async (req, res) => {
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Goals retrieved successfully."
+ *                   example: "Training sessions retrieved successfully."
  *                 data:
  *                   type: array
  *                   items:
@@ -283,33 +283,24 @@ const getTrainings = asyncHandler(async (req, res) => {
  *                       _id:
  *                         type: string
  *                         example: "67aa22895d99240ada6de24c"
- *                       description:
+ *                       date:
  *                         type: string
- *                         example: "Learn basic techniques"
- *                       status:
- *                         type: string
- *                         example: "completed"
- *                       progress:
- *                         type: integer
- *                         example: 100
- *                       notifications:
- *                         type: boolean
- *                         example: true
- *                       user_id:
- *                         type: string
- *                         example: "67a649c42ff750984cd49fe7"
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         example: "2024-01-01T10:00:00Z"
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
+ *                         format: date
  *                         example: "2024-01-02T12:30:00Z"
- *                       __v:
+ *                       intensityLevel:
+ *                         type: string
+ *                         example: "high"
+ *                       durationMinutes:
  *                         type: integer
- *                         example: 0
+ *                         example: 60
+ *                       techniques:
+ *                         type: string
+ *                         example: "guard passing"
+ *                       notes:
+ *                         type: string
+ *                         example: "Focused on guard passing techniques."
  */
+
 
 const getTrainingsByFilter = async (req, res) => {
     const user_id = req.user_id; 
@@ -406,23 +397,23 @@ const updateTraining = asyncHandler(async (req, res) => {
 
 /**
  * @swagger
- * /base_path/base_url/goal/{goal_id}:
+ * /base_path/base_url/training/{training_id}:
  *   delete:
- *     summary: Delete an existing goal
- *     description: Deletes a specific goal for the authenticated user based on its unique ID. The user ID is automatically extracted from the authentication token.
+ *     summary: Delete an existing training session
+ *     description: Deletes a specific training session for the authenticated user based on its unique ID. The user ID is automatically extracted from the authentication token.
  *     security:
  *       - bearerAuth: []  # JWT token authentication
  *     parameters:
- *       - name: goal_id
+ *       - name: training_id
  *         in: path
  *         required: true
- *         description: The ID of the goal to delete
+ *         description: The ID of the training session to delete
  *         schema:
  *           type: string
  *           example: "67aa22895d99240ada6de24c"
  *     responses:
  *       200:
- *         description: Goal deleted successfully
+ *         description: Training session deleted successfully
  *         content:
  *           application/json:
  *             schema:
@@ -430,17 +421,18 @@ const updateTraining = asyncHandler(async (req, res) => {
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Goal deleted successfully."
+ *                   example: "Training session deleted successfully."
  */
 
-const deleteGoal = asyncHandler(async (req, res) => {
+
+const deleteTraining = asyncHandler(async (req, res) => {
     const user_id = req.user_id;  
-    const goal_id = req.params.goal_id;   
+    const training_id = req.params.training_id;   
          
-    const updatedGoal = await goalService.deleteGoal(goal_id, user_id);
+    const updatedTraining = await trainingService.deleteTrainig(training_id, user_id);
     
     return res.status(HTTPSTATUS.OK).json({
-        message: 'Goal delete successfully.',
+        message: 'Training delete successfully.',
     });
 })
   
@@ -451,5 +443,6 @@ export default {
     getTrainingId ,
     getTrainingsByFilter,
     updateTraining,
+    deleteTraining,
 };
 

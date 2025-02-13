@@ -22,7 +22,7 @@ export const trainingRegisterMiddleware = (req, res, next) => {
   if (!validationResult.success) {
 
     return res.status(HTTPSTATUS.BAD_REQUEST).json({
-      message: "Invalid goal data",  
+      message: "Invalid training data",  
       errors: validationResult.error.errors,
     });
   }
@@ -107,5 +107,12 @@ export const trainingUpdateMiddleware = (req, res, next) => {
   }
 
   req.validatedBody = validationResult.data;
+  next();
+};
+
+export const trainingDeleteMiddleware = (req, res, next) => {
+  const { training_id } = req.params;
+  if (validateObjectId(training_id, res, "training_id") === true);
+
   next();
 };
