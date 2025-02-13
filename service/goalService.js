@@ -3,6 +3,7 @@ import ErrorCode from "../common/enums/error-code.enum.js";
 import { BadRequestException, NotFoundException } from "../common/utils/catch-error.js";
 import goalModel from "../database/models/goalModel.js";
 import { goalSchemaValidation } from "../common/validator/goalValidation.js";
+import GoalDTO from "../dto/goalDto.js";
 
 const validateGoalStatus = (goalData) => {
   if (goalData.status === 'completed' && goalData.progress < 100) {
@@ -15,19 +16,30 @@ const validateGoalStatus = (goalData) => {
 
 const createGoal = async (goalData) => {
   validateGoalStatus(goalData);
-  return await goalModel.create(goalData);
+  const goal = await goalModel.create(goalData);
+  const goalDTO = GoalDTO.from(goal); 
+  return goalDTO 
 };
 
 const getGoalsByUser = async (userId) => {
-  return await goalModel.find({ userId }).select("description status progress").lean();;
+  const goals = await goalModel.find({ userId }).select("description status progress notifications").lean();
+  const goalDTO = GoalDTO.from(goals); 
+  return goalDTO ? goalDTO : []; 
 };
 
 const getGoalsByFilter = async (userId, filters) => {
-  return await goalModel.find({userId, ...filters}).select("description status progress notifications").lean();
+  const goals = await goalModel.find({userId, ...filters}).select("description status progress notifications").lean();
+  const goalDTO = GoalDTO.from(goals); 
+  return goalDTO ? goalDTO : []; 
 };
 
 const getGoalIdByUser = async (goalId, userId) => {
-  return await goalModel.findOne({ _id: goalId, userId }).lean();
+  const goal = await goalModel.findOne({ _id: goalId, userId }).lean();
+  if (!goal) {
+    throw new NotFoundException('Goal not found for this user.');
+  }
+  const goalDTO = GoalDTO.from(goal); 
+  return goalDTO  
 };
 
 const updateGoal = async (goalId, userId, goalData) => {
@@ -44,8 +56,8 @@ const updateGoal = async (goalId, userId, goalData) => {
   });
 
   await goal.save(); 
-
-  return goal;
+  const goalDTO = GoalDTO.from(goal); 
+  return goalDTO ? goalDTO : []; 
 };
 
 const deleteGoal = async (goalId, userId) => {
