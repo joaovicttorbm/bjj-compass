@@ -19,8 +19,16 @@ const registerUser = async (registerData) => {
     to: email,
   ...welcomeEmail,
   });
-
-  return await userRepository.createUser({ username, email, password: hashedPassword });
+  const user = await userRepository.createUser({ username, email, password: hashedPassword });
+  return {
+    user,
+    emailSent: {
+      to: email,
+      subject: welcomeEmail.subject,
+      text: welcomeEmail.text,
+      html: welcomeEmail.html,
+    }
+  }
 };
 
 const checkIfUserExists = async (email) => {
