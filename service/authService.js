@@ -1,14 +1,16 @@
-
 import { compareValue } from "../common/utils/bcrypt.js";
-import { findUserByEmail } from "../common/utils/findUser.js";
 import { config } from "../config/app.config.js";
-import userModel from "../database/models/userModel.js";
 import jwt from 'jsonwebtoken';
+import userRepository from "../repository/userRepository.js";
+import { BadRequestException } from "../common/utils/catch-error.js";
+import ErrorCode from "../common/enums/error-code.enum.js";
 
 const authenticateUser = async (email, password) => {
     
-    const user = await findUserByEmail(email);
-
+    const user = await userRepository.findUserByEmail(email);
+    if (!user) {
+        throw new BadRequestException('User not found', ErrorCode.AUTH_EMAIL_ALREADY_EXISTS);
+      }
     const passwordIsValid = await compareValue(password, user.password);
     if (!passwordIsValid) {
         throw new Error('Senha inválida');

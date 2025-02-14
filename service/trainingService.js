@@ -1,10 +1,4 @@
-import mongoose from "mongoose";
-import ErrorCode from "../common/enums/error-code.enum.js";
-import { BadRequestException } from "../common/utils/catch-error.js";
-import { trainingSchemaValidation } from "../common/validator/trainingValidation.js";
-import trainingModel from "../database/models/trainingModel.js";
-import userModel from "../database/models/userModel.js";
-import TrainingDTO from "../dto/TrainingDTO.js";
+import trainingRepository from "../repository/trainingRepository.js";
 
 const createTraining = async (trainingData) => {
 
@@ -17,59 +11,27 @@ const createTraining = async (trainingData) => {
       userId 
     } = trainingData;
   
-    const training = await trainingModel.create(trainingData);
-    const trainingDTO = TrainingDTO.from(training); 
-    return trainingDTO; 
+    return await trainingRepository.createTraining(trainingData);
   }; 
   
 const getTrainings = async (userId) => {
-  const trainings = await trainingModel.find({ userId })
-  .select("date techniques durationMinutes intensityLevel notes").lean();
-  const trainingDTO = TrainingDTO.from(trainings); 
-  return trainingDTO ? trainingDTO : [];
+  return await trainingRepository.findAllByUser(userId);
 };
 
 const getTrainingId = async (trainingId, userId) => {
-  const training = await trainingModel.findOne({ _id: trainingId, userId })
-  .select("date techniques durationMinutes intensityLevel notes").lean();
-  if (!training) {
-    throw new NotFoundException('Trainig not found for this user.');
-  }
-  const trainingDTO = TrainingDTO.from(training); 
-  return trainingDTO; 
+  return await trainingRepository.findById(trainingId, userId);
 };
 
 const getTrainigsByFilter = async (userId, filters) => {
-  const trainings = await trainingModel.find({userId, ...filters})
-  .select("date techniques durationMinutes intensityLevel notes").lean();
-  const trainingDTO = TrainingDTO.from(trainings); 
-  return trainingDTO ? trainingDTO : [];
+  return await trainingRepository.findByFilter(userId, filters);
 };
 
 const updateTrainig = async (trainingId, userId, trainingData) => {
-  const training = await trainingModel.findOne({ _id: trainingId, userId })
-  .select("date techniques durationMinutes intensityLevel notes");
-
-  if (!training) {
-  throw new NotFoundException('Trainig not found for this user.');
-}
-
-  Object.entries(trainingData).forEach(([key, value]) => {
-  if (value !== undefined) {
-    training[key] = value;
-  }
-  });
-
-  await training.save(); 
-  const trainingDTO = TrainingDTO.from(training); 
-  return trainingDTO; 
+  return await trainingRepository.updateTraining(trainingId, userId, trainingData);
 };
 
 const deleteTrainig = async (trainingId, userId) => {
-  const training = await trainingModel.findOneAndDelete({ _id: trainingId, userId }).lean();
-  if (!training) {
-    throw new NotFoundException('Trainig not found for this user.');
-  }
+  await trainingRepository.deleteTraining(trainingId, userId);
 };
 
 export default { 

@@ -1,6 +1,6 @@
 class TrainingDTO {
     constructor(training) {
-      this.trainingid = training._id;
+      this.trainingId = training._id;
       this.date = new Date(training.date).toISOString();
       this.techniques = training.techniques || [];
       this.durationMinutes = training.durationMinutes;
