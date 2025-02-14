@@ -3,6 +3,8 @@ import { BadRequestException } from "../common/utils/catch-error.js";
 import ErrorCode from '../common/enums/error-code.enum.js';
 import { hashValue } from '../common/utils/bcrypt.js';
 import userRepository from '../repository/userRepository.js';
+import { welcomeEmailTemplate } from '../mailers/templates/template.js';
+import { sendEmail } from '../mailers/mailer.js';
 
 const registerUser = async (registerData) => {
 
@@ -12,11 +14,17 @@ const registerUser = async (registerData) => {
 
   const hashedPassword = await hashValue(password) ;
 
+  const welcomeEmail =  welcomeEmailTemplate(username);
+  await sendEmail({
+    to: email,
+  ...welcomeEmail,
+  });
+
   return await userRepository.createUser({ username, email, password: hashedPassword });
 };
 
 const checkIfUserExists = async (email) => {
-  const existingUser = await userRepository.findUserByEmail({ email });
+  const existingUser = await userRepository.findUserByEmail( email );
   if (existingUser) {
     throw new BadRequestException(
       "User already exists with this email",

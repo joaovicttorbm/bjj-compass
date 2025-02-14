@@ -5,6 +5,7 @@ const appConfig = () => ({
   PORT: getEnv("PORT", "3000"),
   BASE_PATH: getEnv("BASE_PATH", "/api/v1"),
   MONGO_URI: getEnv("MONGO_URI"),
+  RESEND_API_KEY: getEnv("RESEND_API_KEY"),
   JWT: {
     SECRET: getEnv("JWT_SECRET", "123456"),
     EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m"),
