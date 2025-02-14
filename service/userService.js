@@ -1,6 +1,4 @@
 import bcrypt from 'bcrypt';
-import { userSchemaValidation } from "../common/validator/userValidator.js";
-import userModel from "../database/models/userModel.js";
 import { BadRequestException } from "../common/utils/catch-error.js";
 import ErrorCode from '../common/enums/error-code.enum.js';
 import { hashValue } from '../common/utils/bcrypt.js';
@@ -25,10 +23,6 @@ const checkIfUserExists = async (email) => {
       ErrorCode.AUTH_EMAIL_ALREADY_EXISTS
     );
   }
-};
-
-const createUser = async (userData) => {
-  return await userModel.create(userData);
 };
 
 export default { registerUser };
