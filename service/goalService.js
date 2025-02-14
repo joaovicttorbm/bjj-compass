@@ -1,4 +1,7 @@
+import { sendEmail } from "../mailers/mailer.js";
+import { goalCompletionEmailTemplate } from "../mailers/templates/template.js";
 import goalRepository from "../repository/goalRepository.js";
+import userRepository from "../repository/userRepository.js";
 
 const validateGoalStatus = (goalData) => {
   if (goalData.status === 'completed' && goalData.progress < 100) {
@@ -27,8 +30,17 @@ const getGoalIdByUser = async (goalId, userId) => {
 };
 
 const updateGoal = async (goalId, userId, goalData) => {
-  return await goalRepository.updateGoal(goalId, userId, goalData);
-};
+
+  const goal = await goalRepository.updateGoal(goalId, userId, goalData);
+  if(goalData.status === "completed"){ 
+    const user = await userRepository.findUserById(userId);
+    const welcomeEmail = goalCompletionEmailTemplate(user.username, goalData.description);
+    await sendEmail({
+      to: user.email, 
+      ...welcomeEmail
+    });
+  }
+}; 
 
 const deleteGoal = async (goalId, userId) => {
   return await goalRepository.deleteGoal(goalId, userId);

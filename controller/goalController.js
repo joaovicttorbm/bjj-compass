@@ -351,8 +351,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     const goalId = req.params.goalId; 
     const goalData = req.validatedBody;  
          
-    const updatedGoal = await goalService.updateGoal(goalId, userId, goalData);
-    
+    const updatedGoal = await goalService.updateGoal(goalId, userId, goalData);   
     return res.status(HTTPSTATUS.OK).json({
         message: 'Goal updated successfully.',
         data: updatedGoal,
