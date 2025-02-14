@@ -1,4 +1,5 @@
 import userModel from "../database/models/userModel.js";
+import UserDTO from "../dto/UserDTO.js";
 
 const findUserByEmail = async (email) => {
   return await userModel.findOne({ email });
@@ -9,7 +10,8 @@ const createUser = async (userData) => {
 };
 
 const findUserById = async (id) => {
-  return await userModel.findById(id).select("username email")
+  const user = await userModel.findById(id).select("username email");
+  return new UserDTO(user);
 };
 
 export default {
