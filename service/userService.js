@@ -5,6 +5,7 @@ import { hashValue } from '../common/utils/bcrypt.js';
 import userRepository from '../repository/userRepository.js';
 import { welcomeEmailTemplate } from '../mailers/templates/template.js';
 import { sendEmail } from '../mailers/mailer.js';
+import UserDTO from '../dto/UserDTO.js';
 
 const registerUser = async (registerData) => {
 
@@ -19,7 +20,7 @@ const registerUser = async (registerData) => {
     to: email,
   ...welcomeEmail,
   });
-  const user = await userRepository.createUser({ username, email, password: hashedPassword });
+  const user = new UserDTO( await userRepository.createUser({ username, email, password: hashedPassword }) );
   return {
     user,
     emailSent: {

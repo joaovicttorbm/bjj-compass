@@ -6,11 +6,12 @@ const appConfig = () => ({
   BASE_PATH: getEnv("BASE_PATH", "/api/v1"),
   MONGO_URI: getEnv("MONGO_URI"),
   RESEND_API_KEY: getEnv("RESEND_API_KEY"),
+  FRONTEND_URL: getEnv("FRONTEND_URL", "http://localhost:3001"),
   JWT: {
     SECRET: getEnv("JWT_SECRET", "123456"),
     EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "15m"),
     REFRESH_SECRET: getEnv("JWT_REFRESH_SECRET"),
-    REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "30d"),
+    REFRESH_EXPIRES_IN: getEnv("JWT_REFRESH_EXPIRES_IN", "15m"),
   },
 });
 

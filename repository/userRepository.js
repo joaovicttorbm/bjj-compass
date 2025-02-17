@@ -10,12 +10,16 @@ const createUser = async (userData) => {
 };
 
 const findUserById = async (id) => {
-  const user = await userModel.findById(id).select("username email");
-  return new UserDTO(user);
+  const user = await userModel.findById(id);
+  return user;
 };
 
+const updateUserPassword = async (userId, newPassword) => {
+  return await userModel.updateOne({ _id: userId }, { password: newPassword });
+}
 export default {
     findUserByEmail,
     createUser,
     findUserById,
+    updateUserPassword,
 }

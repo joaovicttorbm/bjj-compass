@@ -23,7 +23,7 @@ import userModel from './database/models/userModel.js';
 import trainingModel from './database/models/trainingModel.js';
 import goalRoutes from './route/goalRoutes.js';
 import authRoutes from './route/authRoutes.js';
-import authenticateToken from './middlewares/authenticateToken.js';
+import { authenticateToken } from './middlewares/authMiddleware.js';
 
 
 const app = express();
