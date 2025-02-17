@@ -80,7 +80,7 @@ const login = asyncHandler ( async (req, res) => {
 const forgotPassword = asyncHandler(async (req, res) => {
       const { resetToken } = await authService.requestPasswordReset(req.validatedBody.email);
       res.status(HTTPSTATUS.OK).json({
-        mensage: "Password reset email sent successfully.",
+        message: "Password reset email sent successfully.",
         resetToken: resetToken,
     });;
   }
@@ -122,7 +122,7 @@ const resetPassword = asyncHandler( async (req, res) => {
       const { token, newPassword } = req.validatedBody;
       await authService.resetPassword(token, newPassword);
       res.status(HTTPSTATUS.OK).json({
-        mensage: "Update User Password"
+        message: "Update User Password"
     });
   }
 )
