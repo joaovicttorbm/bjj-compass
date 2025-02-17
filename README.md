@@ -28,6 +28,9 @@ Desenvolver o backend eficiente para suportar uma plataforma web que ajuda prati
 
 ## Documentação
 A documentação completa das APIs está disponível no Swagger.
+  ```sh
+   http://localhost:3000/api-docs/
+   ```
 
 ## Como Executar o Projeto
 1. Clone o repositório:
