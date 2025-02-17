@@ -8,7 +8,7 @@ const mailer_sender =
     : `no-reply <${config.MAILER_SENDER}>`;
 
 export const sendEmail = async ({ to, from = mailer_sender, subject, text, html }) => {
-    console.info("E-mail enviado com sucesso!",  to, from = mailer_sender, subject, text, html);
+    console.info("E-mail params",  to, from = mailer_sender, subject);
     await resendClient.resend.emails.send({  
         from,
         to: Array.isArray(to) ? to : [to],

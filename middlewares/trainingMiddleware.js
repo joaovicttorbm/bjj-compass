@@ -73,8 +73,7 @@ export const parseTrainingFiltersMiddleware = (req, res, next) => {
   if (intensityLevel) {
     filters.intensityLevel = intensityLevel;
   }
-
-  console.log(filters)
+  
   req.trainingFilters = filters;  
   next();
 };
