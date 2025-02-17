@@ -4,7 +4,7 @@ import { NotFoundException } from "../common/utils/catch-error.js";
 
 const createTraining = async (trainingData) => {
   const training = await trainingModel.create(trainingData);
-  return TrainingDTO.from(training);
+  return new TrainingDTO(training);
 };
 
 const findAllByUser = async (userId) => {
@@ -21,7 +21,7 @@ const findById = async (trainingId, userId) => {
   if (!training) {
     throw new NotFoundException('Training not found for this user.');
   }
-  return TrainingDTO.from(training);
+  return new TrainingDTO(training);
 };
 
 const findByFilter = async (userId, filters) => {
@@ -42,7 +42,7 @@ const updateTraining = async (trainingId, userId, trainingData) => {
     throw new NotFoundException('Training not found for this user.');
   }
 
-  return TrainingDTO.from(training);
+  return new TrainingDTO(training);
 };
 
 const deleteTraining = async (trainingId, userId) => {

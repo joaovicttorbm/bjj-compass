@@ -4,7 +4,7 @@ import GoalDTO from "../dto/goalDto.js";
 
 const createGoal = async (goalData) => {
   const goal = await goalModel.create(goalData);
-  return GoalDTO.from(goal);
+  return new GoalDTO(goal);
 };
 
 const findGoalsByUser = async (userId) => {
@@ -22,7 +22,7 @@ const findGoalById = async (goalId, userId) => {
   if (!goal) {
     throw new NotFoundException("Goal not found for this user.");
   }
-  return GoalDTO.from(goal);
+  return new GoalDTO(goal);
 };
 
 const updateGoal = async (goalId, userId, goalData) => {
@@ -36,7 +36,7 @@ const updateGoal = async (goalId, userId, goalData) => {
     throw new NotFoundException("Goal not found for this user.");
   }
 
-  return GoalDTO.from(goal);
+  return new GoalDTO(goal);
 };
 
 const deleteGoal = async (goalId, userId) => {

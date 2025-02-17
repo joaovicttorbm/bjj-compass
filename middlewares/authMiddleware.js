@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { HTTPSTATUS } from "../config/http.config.js";
 import { config } from "../config/app.config.js";
-import { emailSchemaValidation, resetPasswordSchemaValidation } from "../common/validator/userValidator.js";
+import { emailSchemaValidation, loginSchemaValidation, resetPasswordSchemaValidation } from "../common/validator/userValidator.js";
 
 
 export const authenticateToken = (req, res, next) => {
