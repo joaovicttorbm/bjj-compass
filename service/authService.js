@@ -47,11 +47,8 @@ const requestPasswordReset = async (email) => {
   };
   
 const resetPassword = async (token, newPassword) => {
-      console.info(token, newPassword)
       const decoded = jwt.verify(token, config.JWT.SECRET);
-      console.info(decoded.userId)
       const user = await userRepository.findUserById(decoded.userId);
-      console.info(user)
       if (!user) {
         throw new BadRequestException('User not found', ErrorCode.AUTH_EMAIL_ALREADY_EXISTS);
       }

@@ -32,25 +32,18 @@ const getGoalIdByUser = async (goalId, userId) => {
 const updateGoal = async (goalId, userId, goalData) => {
 
   const goal = await goalRepository.updateGoal(goalId, userId, goalData);
-  if(goalData.status === "completed"){ 
+  if(goalData.status === "completed" && goalData.notifications === true ){ 
     const user = await userRepository.findUserById(userId);
     const completionEmail = goalCompletionEmailTemplate(user.username, goalData.description);
     await sendEmail({
       to: user.email, 
       ...completionEmail
     });
-    return {
-      goal, 
-      emailSent: {
-        to: user.email,
-        subject: completionEmail.subject,
-        text: completionEmail.text,
-        html: completionEmail.html,
-      },
     }
+    return goal;
   }
-  return goal;
-}; 
+
+
 
 const deleteGoal = async (goalId, userId) => {
   return await goalRepository.deleteGoal(goalId, userId);
