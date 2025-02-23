@@ -89,7 +89,6 @@ app.use((req, res, _next) => {
 
 // Inicialização do Servidor
 app.listen(config.PORT, async () => {
-  console.log(`Server listening on port http://${config.APP_ORIGIN}:${config.PORT}${config.BASE_PATH} in ${config.NODE_ENV}`);
-  console.log(config.BASE_PATH)
+  console.log("Server on");
   await connectDatabase();
 });
