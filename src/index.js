@@ -24,7 +24,7 @@ import trainingModel from './database/models/trainingModel.js';
 import goalRoutes from './route/goalRoutes.js';
 import authRoutes from './route/authRoutes.js';
 import { authenticateToken } from './middlewares/authMiddleware.js';
-
+import { fileURLToPath } from 'url';
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -47,6 +47,10 @@ app.use(mongoSanitize()); // Previne injeções de comandos MongoDB
 app.use(hpp()); // Previne ataques de poluição de parâmetros HTTP
 
 // Configuração de Logs
+// Criar __dirname manualmente
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 if (config.NODE_ENV=== 'development') {
   app.use(morgan('dev')); // Logs detalhados no console
 } else if (config.NODE_ENV=== 'production') {
