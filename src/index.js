@@ -82,7 +82,7 @@ app.use(`${BASE_PATH}/goal`, authenticateToken , goalRoutes);
 
 
 app.use((req, res, _next) => {
-  console.log(`[${req.method}] ${req.url}`, req.body);
+  // console.log(`[${req.method}] ${req.url}`, req.body);
   res.status(HTTPSTATUS.NOT_FOUND).json({ message: 'Rota não encontrada' });
 });
 
