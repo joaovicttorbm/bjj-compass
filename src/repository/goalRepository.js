@@ -1,6 +1,6 @@
 import goalModel from "../database/models/goalModel.js";
 import { NotFoundException } from "../common/utils/catch-error.js";
-import goalDTO from "../dto/goalDto.js";
+import goalDTO from "../dto/goalDTO.js";
 
 const createGoal = async (goalData) => {
   const goal = await goalModel.create(goalData);
