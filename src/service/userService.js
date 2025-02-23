@@ -5,7 +5,7 @@ import { hashValue } from '../common/utils/bcrypt.js';
 import userRepository from '../repository/userRepository.js';
 import { welcomeEmailTemplate } from '../mailers/templates/template.js';
 import { sendEmail } from '../mailers/mailer.js';
-import UserDTO from '../dto/UserDTO.js';
+import UserDTO from '../dto/userDTO.js';
 
 const registerUser = async (registerData) => {
 
