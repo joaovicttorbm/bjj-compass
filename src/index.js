@@ -9,8 +9,6 @@ import xssClean from 'xss-clean';
 import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 import morgan from 'morgan';
-import fs from 'fs';
-import path from 'path';
 import rateLimit from 'express-rate-limit';
 import connectDatabase from './database/database.js';
 import { getEnv } from './common/utils/get-env.js';
@@ -19,12 +17,9 @@ import { HTTPSTATUS } from './config/http.config.js';
 import asyncHandler from './middlewares/asyncHandler.js';
 import userRoutes from './route/userRoutes.js';
 import trainingRoutes from './route/trainingRoutes.js';
-import userModel from './database/models/userModel.js';
-import trainingModel from './database/models/trainingModel.js';
 import goalRoutes from './route/goalRoutes.js';
 import authRoutes from './route/authRoutes.js';
 import { authenticateToken } from './middlewares/authMiddleware.js';
-import { fileURLToPath } from 'url';
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -47,20 +42,11 @@ app.use(mongoSanitize()); // Previne injeções de comandos MongoDB
 app.use(hpp()); // Previne ataques de poluição de parâmetros HTTP
 
 // Configuração de Logs
-// Criar __dirname manualmente
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-if (config.NODE_ENV=== 'development') {
-  app.use(morgan('dev')); // Logs detalhados no console
-} else if (config.NODE_ENV=== 'production') {
-  const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, 'access.log'),
-    { flags: 'a' } // 'a' para append
-  );
-  app.use(morgan('combined', { stream: accessLogStream })); // Logs detalhados em arquivo
+if (config.NODE_ENV === 'development') {
+  app.use(morgan('dev')); // ✅ Usa logs no console
+} else if (config.NODE_ENV === 'production') {
+  app.use(morgan('combined')); // ✅ Log apenas no console (sem arquivos)
 }
-
 // Configuração de Limite de Requisições
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
