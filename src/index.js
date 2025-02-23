@@ -88,7 +88,10 @@ app.use((req, res, _next) => {
 
 
 // Inicialização do Servidor
-app.listen(config.PORT, async () => {
-  console.log("Server on");
-  await connectDatabase();
-});
+// app.listen(config.PORT, async () => {
+//   console.log("Server on");
+//   await connectDatabase();
+// });
+connectDatabase();
+
+export default app;
