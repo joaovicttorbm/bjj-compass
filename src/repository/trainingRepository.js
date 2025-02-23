@@ -1,5 +1,5 @@
 import trainingModel from "../database/models/trainingModel.js";
-import TrainingDTO from "../dto/TrainingDTO.js";
+import TrainingDTO from "../dto/trainingDTO.js";
 import { NotFoundException } from "../common/utils/catch-error.js";
 
 const createTraining = async (trainingData) => {

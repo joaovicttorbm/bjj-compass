@@ -6,7 +6,7 @@ import { BadRequestException } from "../common/utils/catch-error.js";
 import ErrorCode from "../common/enums/error-code.enum.js";
 import { sendEmail } from "../mailers/mailer.js";
 import { resetPasswordEmailTemplate } from "../mailers/templates/template.js";
-import UserDTO from "../dto/UserDTO.js";
+import UserDTO from "../dto/userDTO.js";
 
 const authenticateUser = async (email, password) => {
     
