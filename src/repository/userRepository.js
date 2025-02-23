@@ -1,5 +1,5 @@
 import userModel from "../database/models/userModel.js";
-import UserDTO from "../dto/userDTO.js";
+import userDTO from "../dto/userDTO.js";
 
 const findUserByEmail = async (email) => {
   return await userModel.findOne({ email });

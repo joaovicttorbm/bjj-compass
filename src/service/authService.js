@@ -6,7 +6,7 @@ import { BadRequestException } from "../common/utils/catch-error.js";
 import ErrorCode from "../common/enums/error-code.enum.js";
 import { sendEmail } from "../mailers/mailer.js";
 import { resetPasswordEmailTemplate } from "../mailers/templates/template.js";
-import UserDTO from "../dto/userDTO.js";
+import userDTO from "../dto/userDTO.js";
 
 const authenticateUser = async (email, password) => {
     
@@ -29,7 +29,7 @@ const requestPasswordReset = async (email) => {
          throw new BadRequestException('User not found', ErrorCode.AUTH_EMAIL_ALREADY_EXISTS);
      }
  
-     const user = new UserDTO(userData);
+     const user = new userDTO(userData);
 
   
     const resetToken = jwt.sign({ userId: user.userId }, config.JWT.SECRET , { expiresIn: config.JWT.REFRESH_EXPIRES_IN });

@@ -1,4 +1,4 @@
-class TrainingDTO {
+class trainingDTO {
     constructor(training) {
       this.trainingId = training._id;
       this.date = new Date(training.date).toISOString();
@@ -10,10 +10,10 @@ class TrainingDTO {
   
     static from(data) {
         return Array.isArray(data) 
-          ? data.map(item => new TrainingDTO(item))
-          : [new TrainingDTO(data)]; 
+          ? data.map(item => new trainingDTO(item))
+          : [new trainingDTO(data)]; 
       }
   }
   
-  export default TrainingDTO;
+  export default trainingDTO;
   

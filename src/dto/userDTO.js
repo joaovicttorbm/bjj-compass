@@ -1,4 +1,4 @@
-class UserDTO {
+class userDTO {
     constructor(user) {
       this.userId = user._id;
       this.username = user.username;
@@ -6,9 +6,9 @@ class UserDTO {
     }
     static from(data) {
         return Array.isArray(data) 
-          ? data.map(item => new UserDTO(item))
-          : [new UserDTO(data)]; 
+          ? data.map(item => new userDTO(item))
+          : [new userDTO(data)]; 
       }
   }
 
-export default UserDTO; 
+export default userDTO; 
