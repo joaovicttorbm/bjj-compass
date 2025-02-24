@@ -27,6 +27,8 @@ const BASE_PATH = config.BASE_PATH;
 // Configuração do Swagger
 setupSwagger(app);
 
+app.set('trust proxy', 1);
+
 // Middlewares de Segurança e Utilitários
 app.use(helmet());
 app.use(
