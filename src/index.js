@@ -67,8 +67,8 @@ app.get(
 //Routes
 app.use(`${BASE_PATH}/user`, userRoutes);
 app.use(`${BASE_PATH}/user/auth`, authRoutes);
-app.use(`${BASE_PATH}/training`, authenticateToken , trainingRoutes);
-app.use(`${BASE_PATH}/goal`, authenticateToken , goalRoutes);
+app.use(`${BASE_PATH}/training`, authenticateToken, trainingRoutes);
+app.use(`${BASE_PATH}/goal`, authenticateToken, goalRoutes);
 
 
 app.use((req, res, _next) => {
@@ -77,7 +77,7 @@ app.use((req, res, _next) => {
 });
 
 
-// Inicialização do Servidor
+// // Inicialização do Servidor
 // app.listen(config.PORT, async () => {
 //   console.log("Server on");
 //   await connectDatabase();

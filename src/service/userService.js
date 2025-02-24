@@ -15,13 +15,13 @@ const registerUser = async (registerData) => {
 
   const hashedPassword = await hashValue(password) ;
 
-  const welcomeEmail =  welcomeEmailTemplate(username);
-  await sendEmail({
-    to: email,
-  ...welcomeEmail,
-  });
+  // const welcomeEmail =  welcomeEmailTemplate(username);
+  // await sendEmail({
+  //   to: email,
+  // ...welcomeEmail,
+  // });
   const user = new userDTO( await userRepository.createUser({ username, email, password: hashedPassword }) );
-  return user
+  // return user
 };
 
 const checkIfUserExists = async (email) => {

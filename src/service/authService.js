@@ -36,11 +36,11 @@ const requestPasswordReset = async (email) => {
 
     const resetLink = `${config.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
-    const resetEmail =  resetPasswordEmailTemplate( user.username, user.email, resetLink  );
-      await sendEmail({
-        to: email,
-      ...resetEmail,
-      });
+    // const resetEmail =  resetPasswordEmailTemplate( user.username, user.email, resetLink  );
+    //   await sendEmail({
+    //     to: email,
+    //   ...resetEmail,
+    //   });
     return{
         resetToken: resetToken
     }

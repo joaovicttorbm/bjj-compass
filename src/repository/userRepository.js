@@ -6,7 +6,7 @@ const findUserByEmail = async (email) => {
 };
 
 const createUser = async (userData) => {
-  return await userModel.create(userData);
+  await userModel.create(userData);
 };
 
 const findUserById = async (id) => {
@@ -15,7 +15,7 @@ const findUserById = async (id) => {
 };
 
 const updateUserPassword = async (userId, newPassword) => {
-  return await userModel.updateOne({ _id: userId }, { password: newPassword });
+  await userModel.updateOne({ _id: userId }, { password: newPassword });
 }
 export default {
     findUserByEmail,
