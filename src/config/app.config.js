@@ -1,7 +1,7 @@
 import { getEnv } from "../common/utils/get-env.js";
 const appConfig = () => ({
   NODE_ENV: getEnv("NODE_ENV", "development"),
-  APP_ORIGIN: getEnv("APP_ORIGIN", "localhost:5173"),
+  APP_ORIGIN: getEnv("APP_ORIGIN", "http://localhost:5173"),
   PORT: getEnv("PORT", "3000"),
   BASE_PATH: getEnv("BASE_PATH", "/api/v1"),
   MONGO_URI: getEnv("MONGO_URI"),
