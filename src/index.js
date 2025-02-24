@@ -35,6 +35,9 @@ app.use(
   cors({
     origin: config.APP_ORIGIN,
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    preflightContinue: false, 
   })
 );
 app.use(cookieParser());
