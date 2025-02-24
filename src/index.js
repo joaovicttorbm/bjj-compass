@@ -36,7 +36,7 @@ app.use(
     origin: config.APP_ORIGIN,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'], 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     preflightContinue: false, 
   })
 );
