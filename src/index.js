@@ -60,22 +60,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use((err, req, res, next) => {
-  console.error("Error occurred:", err);
-  if (err instanceof BadRequestException) {
-    return res.status(400).json({
-      message: err.message,
-      errorCode: err.code
-    });
-  }
-
-  // Caso não seja um erro BadRequestException
-  return res.status(500).json({
-    message: "An unexpected error occurred.",
-    errorCode: "UNKNOWN_ERROR"
-  });
-});
-
 
 app.get(
   "/",
@@ -97,7 +81,21 @@ app.use((req, res, _next) => {
   // console.log(`[${req.method}] ${req.url}`, req.body);
   res.status(HTTPSTATUS.NOT_FOUND).json({ message: 'Rota não encontrada' });
 });
+app.use((err, req, res, next) => {
+  console.error("Error occurred:", err);
+  if (err instanceof BadRequestException) {
+    return res.status(400).json({
+      message: err.message,
+      errorCode: err.code
+    });
+  }
 
+  // Caso não seja um erro BadRequestException
+  return res.status(500).json({
+    message: "An unexpected error occurred.",
+    errorCode: "UNKNOWN_ERROR"
+  });
+})
 
 // // Inicialização do Servidor
 // app.listen(config.PORT, async () => {
