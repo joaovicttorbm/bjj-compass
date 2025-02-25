@@ -60,6 +60,22 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+app.use((err, req, res, next) => {
+  if (err instanceof BadRequestException) {
+    return res.status(400).json({
+      message: err.message,
+      errorCode: err.code
+    });
+  }
+
+  // Caso não seja um erro BadRequestException
+  return res.status(500).json({
+    message: "An unexpected error occurred.",
+    errorCode: "UNKNOWN_ERROR"
+  });
+});
+
+
 app.get(
   "/",
   asyncHandler(async (req, res, next) => {
