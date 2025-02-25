@@ -20,8 +20,7 @@ const registerUser = async (registerData) => {
   //   to: email,
   // ...welcomeEmail,
   // });
-  const user = new userDTO( await userRepository.createUser({ username, email, password: hashedPassword }) );
-  // return user
+  const user =  await userRepository.createUser({ username, email, password: hashedPassword }) ;
 };
 
 const checkIfUserExists = async (email) => {
