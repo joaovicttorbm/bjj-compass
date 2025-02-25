@@ -20,6 +20,7 @@ import trainingRoutes from './route/trainingRoutes.js';
 import goalRoutes from './route/goalRoutes.js';
 import authRoutes from './route/authRoutes.js';
 import { authenticateToken } from './middlewares/authMiddleware.js';
+import { BadRequestException } from './common/utils/catch-error.js';
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
