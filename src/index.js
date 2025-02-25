@@ -61,6 +61,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.use((err, req, res, next) => {
+  console.error("Error occurred:", err);
   if (err instanceof BadRequestException) {
     return res.status(400).json({
       message: err.message,
