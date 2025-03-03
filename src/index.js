@@ -32,15 +32,16 @@ app.set('trust proxy', 1);
 
 // Middlewares de Segurança e Utilitários
 app.use(helmet());
-// app.use(
-//   cors({
-//     origin: [config.APP_ORIGIN, 'http://localhost:5173'],
-//     credentials: true,
-//     allowedHeaders: ['Content-Type', 'Authorization'], 
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-//     preflightContinue: false, 
-//   })
-// );
+app.use(
+  cors({
+    origin: [config.APP_ORIGIN, 'http://localhost:5173'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    preflightContinue: false, 
+  })
+);
+app.options('*', cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(xssClean()); // Proteção contra XSS (Cross-Site Scripting)
