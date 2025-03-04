@@ -34,7 +34,7 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: [config.APP_ORIGIN, 'http://localhost:5173'],
+    origin: ["https://agenda-ai-seven.vercel.app/", 'http://localhost:5173'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
