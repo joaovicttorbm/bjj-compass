@@ -32,21 +32,21 @@ app.set('trust proxy', 1);
 
 // Middlewares de Segurança e Utilitários
 app.use(helmet());
-app.use(
-  cors({
-    origin: [config.APP_ORIGIN, 'http://localhost:5173'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'], 
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-    preflightContinue: false, 
-  })
-);
-app.use((req, res, next) => {
-  console.log('CORS header definido:', res.get('Access-Control-Allow-Origin'));
-  next();
-});
+// app.use(
+//   cors({
+//     origin: [config.APP_ORIGIN, 'http://localhost:5173'],
+//     credentials: true,
+//     allowedHeaders: ['Content-Type', 'Authorization'], 
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+//     preflightContinue: false, 
+//   })
+// );
+// app.use((req, res, next) => {
+//   console.log('CORS header definido:', res.get('Access-Control-Allow-Origin'));
+//   next();
+// });
 
-// app.options('*', cors());
+// // app.options('*', cors());
 
 app.use(cookieParser());
 app.use(express.json());
