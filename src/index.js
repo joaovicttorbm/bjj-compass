@@ -41,6 +41,11 @@ app.use(
     preflightContinue: false, 
   })
 );
+app.use((req, res, next) => {
+  console.log('CORS header definido:', res.get('Access-Control-Allow-Origin'));
+  next();
+});
+
 app.options('*', cors());
 app.use(cookieParser());
 app.use(express.json());
