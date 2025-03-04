@@ -46,7 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.options('*', cors());
+// app.options('*', cors());
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(xssClean()); // Proteção contra XSS (Cross-Site Scripting)
